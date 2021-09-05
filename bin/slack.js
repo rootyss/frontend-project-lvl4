@@ -3,7 +3,7 @@
 import getApp from '../server/index.js';
 
 const port = process.env.PORT || 5000;
-const address = '192.168.0.1';
+const address = '0.0.0.0';
 
 getApp({ port }).then((app) => {
   app.listen(port, address, () => {
