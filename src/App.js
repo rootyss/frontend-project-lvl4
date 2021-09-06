@@ -1,5 +1,5 @@
 import React from 'react';
-import Form from "./component/Form.jsx";
+import Form from "./components/Form.jsx";
 
 const App = () => {
   return (<div className="d-flex flex-column h-100"> 
