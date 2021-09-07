@@ -5,7 +5,7 @@ import 'regenerator-runtime/runtime.js';
 import '../assets/application.scss';
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App.js";
+import App from "./App.jsx";
 
 if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
