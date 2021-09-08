@@ -5,7 +5,7 @@ import React from 'react';
 
 const NoMatch = () => {
 	return (
-        <a className="navbar-brand" href="/">Hexlet Chat (404)</a>
+        <a className="navbar-brand" href="/">Hexlet Chat (404 error)</a>
   );
 }
 
