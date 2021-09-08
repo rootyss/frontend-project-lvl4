@@ -1,4 +1,7 @@
 import React from 'react';
+import {
+  Link
+} from "react-router-dom";
 import pic from '../img/1.jpg';
 
 const Form = () => {
@@ -32,8 +35,8 @@ const Form = () => {
 					</div>
 					<div className="card-footer p-4">
 						<div className="text-center">
-							<span>Нет аккаунта?</span> 
-							<a href="/signup">Регистрация</a>
+							<span>Нет аккаунта? </span> 
+							<Link to="/signup">Регистрация</Link>
 						</div>
 					</div>
 				</div>
