@@ -13,19 +13,14 @@ const App = () => {
   return (
     <Router>
         <Switch>
+        <Route exact path="/">
+            <Redirect to="/login" />
+          </Route>
           <Route path="/login">
             <Form />
           </Route>
           <Route path="*">
             <NoMatch />
-          </Route>
-          <Route exact path="/">
-            <Redirect
-            to={{
-              pathname: "/login",
-              state: { from: location }
-            }}
-          />
           </Route>
         </Switch>
     </Router>
