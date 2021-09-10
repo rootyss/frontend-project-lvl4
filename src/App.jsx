@@ -4,28 +4,23 @@ import {
   Route,
   Switch,
   Redirect,
-  useLocation
-} from "react-router-dom";
-import Form from "./components/Form.jsx";
-import NoMatch from "./components/NoMatch.jsx";
+} from 'react-router-dom';
+import { FormComponent, NoMatch } from './components.jsx';
 
-const App = () => {
-  return (
-    <Router>
-        <Switch>
-        <Route exact path="/">
-            <Redirect to="/login" />
-          </Route>
-          <Route path="/login">
-            <Form />
-          </Route>
-          <Route path="*">
-            <NoMatch />
-          </Route>
-        </Switch>
-    </Router>
-  );
-};
+const App = () => (
+  <Router>
+    <Switch>
+      <Route exact path="/">
+        <Redirect to="/login" />
+      </Route>
+      <Route path="/login">
+        <FormComponent />
+      </Route>
+      <Route path="*">
+        <NoMatch />
+      </Route>
+    </Switch>
+  </Router>
+);
 
 export default App;
-
