@@ -28,7 +28,7 @@ export const FormComponent = () => {
     validateOnChange: false,
     validationSchema: SignupSchema,
     onSubmit: async () => {
-      console.log(formik.errors);
+      
     },
   });
 
