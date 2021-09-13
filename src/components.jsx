@@ -1,12 +1,14 @@
 import React from 'react';
 import {
   Link,
+  useHistory,
 } from 'react-router-dom';
 import {
   Button, Form, FormGroup, FormControl, FormLabel, Card,
 } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import axios from 'axios';
 import cn from 'classnames';
 import pic from './img/1.jpg';
 
@@ -19,6 +21,8 @@ export const FormComponent = () => {
   const classNames = (isValid) => cn('form-control', {
     'is-invalid': isValid,
   });
+  
+  const history = useHistory();
 
   const formik = useFormik({
     initialValues: {
@@ -27,8 +31,11 @@ export const FormComponent = () => {
     },
     validateOnChange: false,
     validationSchema: SignupSchema,
-    onSubmit: async () => {
-
+    onSubmit: async (values) => {
+      const resp = await axios.post('/api/v1/login', values);
+      const { token } = resp.data;
+      localStorage.setItem('user', JSON.stringify({token}));
+      history.push('/');
     },
   });
 
@@ -61,7 +68,7 @@ export const FormComponent = () => {
                       placeholder="Ваш ник"
                       onChange={formik.handleChange}
                       value={formik.values.username}
-                      isInvalid={formik.touched.password && Boolean(formik.errors.password)}
+                      isInvalid={formik.touched.password && Boolean(formik.errors.username)}
                     />
                     <FormLabel htmlFor="username">Ваш ник</FormLabel>
                   </FormGroup>
@@ -70,7 +77,7 @@ export const FormComponent = () => {
                       type="password"
                       id="password"
                       name="password"
-                      className={classNames(formik.errors.username)}
+                      className={classNames(formik.errors.password)}
                       autoComplete="current-password"
                       required
                       placeholder="Пароль"
@@ -111,3 +118,23 @@ export const NoMatch = () => (
     </nav>
   </div>
 );
+
+
+export const Chat = () => {
+  return (
+    <div className="d-flex flex-column h-100">
+      <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
+        <div className="container">
+          <a className="navbar-brand" href="/">Hexlet Chat</a>
+        </div>
+      </nav>
+      <div className="container-fluid h-100">
+        <div className="row justify-content-center align-content-center h-100">
+          <div className="col-12 col-md-8 col-xxl-6">
+          its work
+    </div>
+    </div>
+    </div>
+    </div>
+    )
+}

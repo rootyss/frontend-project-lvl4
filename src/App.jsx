@@ -5,16 +5,21 @@ import {
   Switch,
   Redirect,
 } from 'react-router-dom';
-import { FormComponent, NoMatch } from './components.jsx';
+import { FormComponent, NoMatch, Chat } from './components.jsx';
+
+const isAuth = () => {
+  const user = localStorage.getItem('user');
+  return user ? true : false;
+}
 
 const App = () => (
   <Router>
     <Switch>
       <Route exact path="/">
-        <Redirect to="/login" />
+        {isAuth() ? <Chat /> : <Redirect to="/login" />}
       </Route>
       <Route path="/login">
-        <FormComponent />
+        {isAuth() ? <Redirect to='/' /> : <FormComponent />}
       </Route>
       <Route path="*">
         <NoMatch />
