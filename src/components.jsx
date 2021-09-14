@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Link,
   useHistory,
+  useLocation,
 } from 'react-router-dom';
 import {
   Button, Form, FormGroup, FormControl, FormLabel, Card,
@@ -9,20 +10,24 @@ import {
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios';
-import cn from 'classnames';
 import pic from './img/1.jpg';
+import useAuth from './hooks/index.jsx';
 
 export const FormComponent = () => {
+  const auth = useAuth();
+  const [authFailed, setAuthFailed] = useState(false);
+  const inputRef = useRef();
+  const location = useLocation();
+  const history = useHistory();
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
+
   const SignupSchema = yup.object({
     username: yup.string().required(),
     password: yup.string().required(),
   });
-
-  const classNames = (isValid) => cn('form-control', {
-    'is-invalid': isValid,
-  });
-  
-  const history = useHistory();
 
   const formik = useFormik({
     initialValues: {
@@ -32,10 +37,22 @@ export const FormComponent = () => {
     validateOnChange: false,
     validationSchema: SignupSchema,
     onSubmit: async (values) => {
-      const resp = await axios.post('/api/v1/login', values);
-      const { token } = resp.data;
-      localStorage.setItem('user', JSON.stringify({token}));
-      history.push('/');
+      setAuthFailed(false);
+
+      try {
+        const resp = await axios.post('/api/v1/login', values);
+        localStorage.setItem('user', JSON.stringify(resp.data));
+        auth.logIn();
+        const { from } = location.state || { from: { pathname: '/' } };
+        history.replace(from);
+      } catch (err) {
+        if (err.isAxiosError && err.response.status === 401) {
+          setAuthFailed(true);
+          inputRef.current.select();
+          return;
+        }
+        throw err;
+      }
     },
   });
 
@@ -62,13 +79,13 @@ export const FormComponent = () => {
                       type="text"
                       id="username"
                       name="username"
-                      className={classNames(formik.errors.username)}
                       autoComplete="username"
                       required
                       placeholder="Ваш ник"
                       onChange={formik.handleChange}
                       value={formik.values.username}
-                      isInvalid={formik.touched.password && Boolean(formik.errors.username)}
+                      isInvalid={authFailed}
+                      ref={inputRef}
                     />
                     <FormLabel htmlFor="username">Ваш ник</FormLabel>
                   </FormGroup>
@@ -77,13 +94,12 @@ export const FormComponent = () => {
                       type="password"
                       id="password"
                       name="password"
-                      className={classNames(formik.errors.password)}
                       autoComplete="current-password"
                       required
                       placeholder="Пароль"
                       onChange={formik.handleChange}
                       value={formik.values.password}
-                      isInvalid={formik.touched.password && Boolean(formik.errors.password)}
+                      isInvalid={authFailed}
                     />
                     <FormLabel htmlFor="password">Пароль</FormLabel>
                     <Form.Control.Feedback type="invalid">Не верное имя пользователя или пароль</Form.Control.Feedback>
@@ -119,22 +135,19 @@ export const NoMatch = () => (
   </div>
 );
 
-
-export const Chat = () => {
-  return (
-    <div className="d-flex flex-column h-100">
-      <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
-        <div className="container">
-          <a className="navbar-brand" href="/">Hexlet Chat</a>
-        </div>
-      </nav>
-      <div className="container-fluid h-100">
-        <div className="row justify-content-center align-content-center h-100">
-          <div className="col-12 col-md-8 col-xxl-6">
+export const Chat = () => (
+  <div className="d-flex flex-column h-100">
+    <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
+      <div className="container">
+        <a className="navbar-brand" href="/">Hexlet Chat</a>
+      </div>
+    </nav>
+    <div className="container-fluid h-100">
+      <div className="row justify-content-center align-content-center h-100">
+        <div className="col-12 col-md-8 col-xxl-6">
           its work
+        </div>
+      </div>
     </div>
-    </div>
-    </div>
-    </div>
-    )
-}
+  </div>
+);
