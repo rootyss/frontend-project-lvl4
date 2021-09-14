@@ -1,17 +1,24 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import {
   BrowserRouter as Router,
   Route,
   Switch,
-  Link,
   Redirect,
 } from 'react-router-dom';
-import { FormComponent, NoMatch, Chat } from './components.jsx';
+import LoginPage from './components/LoginPage.jsx';
+import NoMatch from './components/NoMatch.jsx';
+import Chat from './components/Chat.jsx';
+import NavBar from './components/NavBar.jsx';
 import authContext from './context/index.jsx';
 import useAuth from './hooks/index.jsx';
 
+const isAuth = () => {
+  const user = JSON.parse(localStorage.getItem('user'));
+  return (user && user.token);
+};
+
 const AuthProvider = ({ children }) => {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(isAuth());
 
   const logIn = () => setLoggedIn(true);
   const logOut = () => {
@@ -28,7 +35,6 @@ const AuthProvider = ({ children }) => {
 
 const ChatRoute = ({ children, path }) => {
   const auth = useAuth();
-
   return (
     <Route
       path={path}
@@ -42,17 +48,20 @@ const ChatRoute = ({ children, path }) => {
 const App = () => (
   <AuthProvider>
     <Router>
-      <Switch>
-        <ChatRoute exact path="/">
-          <Chat />
-        </ChatRoute>
-        <Route path="/login">
-          <FormComponent />
-        </Route>
-        <Route path="*">
-          <NoMatch />
-        </Route>
-      </Switch>
+      <div className="d-flex flex-column h-100">
+        <NavBar />
+        <Switch>
+          <ChatRoute exact path="/">
+            <Chat />
+          </ChatRoute>
+          <Route path="/login">
+            <LoginPage />
+          </Route>
+          <Route path="*">
+            <NoMatch />
+          </Route>
+        </Switch>
+      </div>
     </Router>
   </AuthProvider>
 );
