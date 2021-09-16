@@ -12,10 +12,45 @@ import NavBar from './components/NavBar.jsx';
 import authContext from './context/index.jsx';
 import useAuth from './hooks/index.jsx';
 
-const isAuth = () => {
-  const user = JSON.parse(localStorage.getItem('user'));
-  return (user && user.token);
+import { isAuth, getAuthHeader } from './utils.js';
+
+import axios from 'axios';
+
+/*
+channelsInfo: {
+  channels: {
+    {
+    id: 1,
+    name: string,
+    removeable: false,
+    },
+    currentChannelId: 1
+  },
+  messagesInfo: {
+    messages: {
+      {
+        body: text message,
+        channelId: 1,
+        username: 'admin',
+        id: 5
+      }
+    }
+  },
+  modal: {
+    isOpenes: false,
+    type: null,
+    extra: null,
+  }
+}
+*/
+
+const lol = async () => {
+  if (isAuth()) {
+    const resp = await axios.get('/api/v1/data', { headers: getAuthHeader() });
+    console.log(resp.data);
+  }
 };
+lol();
 
 const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(isAuth());
