@@ -1,61 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Route,
   Switch,
   Redirect,
 } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import LoginPage from './components/LoginPage.jsx';
 import NoMatch from './components/NoMatch.jsx';
 import Chat from './components/Chat.jsx';
 import NavBar from './components/NavBar.jsx';
 import authContext from './context/index.jsx';
 import useAuth from './hooks/index.jsx';
-
-import { isAuth, getAuthHeader } from './utils.js';
-
-import axios from 'axios';
-
-/*
-channelsInfo: {
-  channels: {
-    {
-    id: 1,
-    name: string,
-    removeable: false,
-    },
-    currentChannelId: 1
-  },
-  messagesInfo: {
-    messages: {
-      {
-        body: text message,
-        channelId: 1,
-        username: 'admin',
-        id: 5
-      }
-    }
-  },
-  modal: {
-    isOpenes: false,
-    type: null,
-    extra: null,
-  }
-}
-*/
-
-const lol = async () => {
-  if (isAuth()) {
-    const resp = await axios.get('/api/v1/data', { headers: getAuthHeader() });
-    console.log(resp.data);
-  }
-};
-lol();
+import { isAuth } from './utils.js';
+import { fetchChanelsInfo } from './store/slice.js';
 
 const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(isAuth());
-
-  const logIn = () => setLoggedIn(true);
+const dispatch = useDispatch();
+  const logIn = () => {
+    setLoggedIn(true)
+    dispatch(fetchChanelsInfo());
+  };
   const logOut = () => {
     localStorage.removeItem('user');
     setLoggedIn(false);
@@ -80,7 +46,9 @@ const ChatRoute = ({ children, path }) => {
   );
 };
 
-const App = () => (
+const App = () => {
+
+  return (
   <AuthProvider>
     <Router>
       <div className="d-flex flex-column h-100">
@@ -99,6 +67,6 @@ const App = () => (
       </div>
     </Router>
   </AuthProvider>
-);
+)};
 
 export default App;
