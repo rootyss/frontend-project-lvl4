@@ -2,8 +2,8 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { getAuthHeader } from '../utils.js';
 
-export const fetchChanelsInfo = createAsyncThunk(
-  'channelsInfo/fetchChanelsInfo',
+export const fetchInfo = createAsyncThunk(
+  'channelsInfo/fetchInfo',
   async () => {
     try {
       const resp = await axios.get('/api/v1/data', { headers: getAuthHeader() });
@@ -22,7 +22,6 @@ const channelsInfoSlice = createSlice({
   initialState: {
     channels: [],
     currentChannelId: 1,
-    chanelFetchingState: 'none',
   },
   reducers: {
     addChanel(state, action) {},
@@ -30,36 +29,50 @@ const channelsInfoSlice = createSlice({
     renameChanel(state, action) {},
   },
   extraReducers: {
-    [fetchChanelsInfo.pending]: (state, action) => {
-      state.chanelFetchingState = 'requested';
-    },
-    [fetchChanelsInfo.fulfilled]: (state, action) => {
-      state.chanelFetchingState = 'finished';
+    [fetchInfo.pending]: (state, action) => {},
+    [fetchInfo.fulfilled]: (state, action) => {
       state.channels = action.payload.channels;
     },
-    [fetchChanelsInfo.rejected]: (state, action) => {
-      state.chanelFetchingState = 'rejected';
-    },
+    [fetchInfo.rejected]: (state, action) => {},
   },
 });
 
 export const { addChanel } = channelsInfoSlice.actions;
-export default channelsInfoSlice.reducer;
+export const channelsInfoSliceReducer = channelsInfoSlice.reducer;
 
-/* const messagesInfo = createSlice({
-name: 'messagesInfo',
-initialState: {
-messages: [],
-},
-extraReducers: {
-        [fetchInfo.pending]: (state, action) => {
-state.chanelFetchingState = 'requested';
-},
-[fetchInfo.fulfilled]: (state, action) => {
-            state.chanelFetchingState = 'finished';
-            state.channels = action.payload.messages;
-            console.log(action.payload.messages);
-},
-[fetchInfo.rejected]: (state, action) => {},
-}
-}) */
+const messagesInfoSlice = createSlice({
+  name: 'messagesInfo',
+  initialState: {
+    messages: [],
+  },
+  extraReducers: {
+    [fetchInfo.pending]: (state, action) => {},
+    [fetchInfo.fulfilled]: (state, action) => {
+            state.messages = action.payload.messages;
+    },
+    [fetchInfo.rejected]: (state, action) => {},
+  }
+});
+
+export const messagesInfoSliceReducer = messagesInfoSlice.reducer;
+
+const fetchingState = createSlice({
+  name: 'fetchingState',
+  initialState: {
+    fetchingState: 'none',
+  },
+  extraReducers: {
+    [fetchInfo.pending]: (state, action) => {
+      state.fetchingState = 'pending';
+  },
+    [fetchInfo.fulfilled]: (state, action) => {
+            state.fetchingState = 'finished';
+    },
+    [fetchInfo.rejected]: (state, action) => {
+      state.fetchingState = 'error';
+    },
+              
+  }
+});
+
+export const fetchingStateSliceReducer = fetchingState.reducer;

@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import Channels from './Channels.jsx';
 import { addChanel } from '../store/slice.js';
+import Messages from './Messages.jsx';
 
 const Chat = () => {
   const dispatch = useDispatch();
@@ -27,20 +28,7 @@ const Chat = () => {
               <p className="m-0"><b># general</b></p>
               <span className="text-muted">15 сообщений</span>
             </div>
-            <div id="messages-box" className="chat-messages overflow-auto px-5 ">
-              <div className="text-break mb-2">
-                <b>conarti</b>
-                : 123
-              </div>
-              <div className="text-break mb-2">
-                <b>Саня</b>
-                : Привет
-              </div>
-              <div className="text-break mb-2">
-                <b>conarti</b>
-                : qq
-              </div>
-            </div>
+           <Messages />
             <div className="mt-auto px-5 py-3">
               <form noValidate="" className="py-1 border rounded-2">
                 <div className="input-group has-validation">
