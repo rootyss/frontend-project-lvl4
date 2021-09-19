@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -17,9 +17,9 @@ import { fetchChanelsInfo } from './store/slice.js';
 
 const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(isAuth());
-const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const logIn = () => {
-    setLoggedIn(true)
+    setLoggedIn(true);
     dispatch(fetchChanelsInfo());
   };
   const logOut = () => {
@@ -46,9 +46,7 @@ const ChatRoute = ({ children, path }) => {
   );
 };
 
-const App = () => {
-
-  return (
+const App = () => (
   <AuthProvider>
     <Router>
       <div className="d-flex flex-column h-100">
@@ -67,6 +65,6 @@ const App = () => {
       </div>
     </Router>
   </AuthProvider>
-)};
+);
 
 export default App;

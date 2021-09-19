@@ -2,12 +2,12 @@
 
 import 'core-js/stable/index.js';
 import 'regenerator-runtime/runtime.js';
-import { Provider } from 'react-redux'
+import { Provider } from 'react-redux';
 import '../assets/application.scss';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App.jsx';
-import store from './store/';
+import store from './store';
 
 if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
@@ -15,7 +15,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 ReactDOM.render(
   <Provider store={store}>
-  <App />
+    <App />
   </Provider>,
-  document.getElementById('chat')
-  );
+  document.getElementById('chat'),
+);
