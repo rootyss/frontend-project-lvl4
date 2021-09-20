@@ -17,6 +17,8 @@ const LoginPage = () => {
   const auth = useAuth();
 
   const [authFailed, setAuthFailed] = useState(false);
+  const [fetchingState, setFetchingState] = useState('none');
+
   const inputRef = useRef();
   const location = useLocation();
   const history = useHistory();
@@ -39,14 +41,16 @@ const LoginPage = () => {
     validationSchema: SignupSchema,
     onSubmit: async (values) => {
       setAuthFailed(false);
-
+      setFetchingState('pending');
       try {
         const resp = await axios.post('/api/v1/login', values);
+        setFetchingState('finished');
         localStorage.setItem('user', JSON.stringify(resp.data));
         auth.logIn();
         const { from } = location.state || { from: { pathname: '/' } };
         history.replace(from);
       } catch (err) {
+        setFetchingState('error');
         if (err.isAxiosError && err.response.status === 401) {
           setAuthFailed(true);
           inputRef.current.select();
@@ -100,7 +104,14 @@ const LoginPage = () => {
                   <FormLabel htmlFor="password">Пароль</FormLabel>
                   <Form.Control.Feedback type="invalid">Не верное имя пользователя или пароль</Form.Control.Feedback>
                 </FormGroup>
-                <Button type="submit" className="w-100 mb-3" variant="outline-primary">Войти</Button>
+                <Button
+                  type="submit"
+                  className="w-100 mb-3"
+                  variant="outline-primary"
+                  disabled={fetchingState === 'pending'}
+                >
+                  Войти
+                </Button>
               </Form>
 
             </Card.Body>

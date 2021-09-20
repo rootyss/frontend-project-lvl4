@@ -5,7 +5,6 @@ import {
   Switch,
   Redirect,
 } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import LoginPage from './components/LoginPage.jsx';
 import NoMatch from './components/NoMatch.jsx';
 import Chat from './components/Chat.jsx';
@@ -13,14 +12,11 @@ import NavBar from './components/NavBar.jsx';
 import authContext from './context/index.jsx';
 import useAuth from './hooks/index.jsx';
 import { isAuth } from './utils.js';
-import { fetchInfo } from './store/slice.js';
 
 const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(isAuth());
-  const dispatch = useDispatch();
   const logIn = () => {
     setLoggedIn(true);
-    dispatch(fetchInfo());
   };
   const logOut = () => {
     localStorage.removeItem('user');

@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import Channels from './Channels.jsx';
-import { addChanel } from '../store/slice.js';
+import { addChanel, fetchInfo } from '../store/slice.js';
 import Messages from './Messages.jsx';
 
 const Chat = () => {
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchInfo());
+  });
+
   return (
     <div className="container h-100 my-4 overflow-hidden rounded shadow">
       <div className="row h-100 bg-white flex-md-row">
@@ -28,7 +33,7 @@ const Chat = () => {
               <p className="m-0"><b># general</b></p>
               <span className="text-muted">15 сообщений</span>
             </div>
-           <Messages />
+            <Messages />
             <div className="mt-auto px-5 py-3">
               <form noValidate="" className="py-1 border rounded-2">
                 <div className="input-group has-validation">
