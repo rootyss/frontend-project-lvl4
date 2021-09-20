@@ -10,7 +10,7 @@ export const fetchInfo = createAsyncThunk(
       return resp.data;
     } catch (err) {
       if (err.isAxiosError) {
-        return;
+        return err.name;
       }
       throw err;
     }
@@ -23,17 +23,12 @@ const channelsInfoSlice = createSlice({
     channels: [],
     currentChannelId: 1,
   },
-  reducers: {
-    addChanel(state, action) {},
-    removeChanel(state, action) {},
-    renameChanel(state, action) {},
-  },
+  reducers: {},
   extraReducers: {
-    [fetchInfo.pending]: (state, action) => {},
     [fetchInfo.fulfilled]: (state, action) => {
-      state.channels = action.payload.channels;
+      const { channels } = action.payload;
+      return { ...state, channels };
     },
-    [fetchInfo.rejected]: (state, action) => {},
   },
 });
 
@@ -46,11 +41,10 @@ const messagesInfoSlice = createSlice({
     messages: [],
   },
   extraReducers: {
-    [fetchInfo.pending]: (state, action) => {},
     [fetchInfo.fulfilled]: (state, action) => {
-      state.messages = action.payload.messages;
+      const { messages } = action.payload;
+      return { ...state, messages };
     },
-    [fetchInfo.rejected]: (state, action) => {},
   },
 });
 
@@ -62,15 +56,9 @@ const fetchingState = createSlice({
     fetchingState: 'none',
   },
   extraReducers: {
-    [fetchInfo.pending]: (state, action) => {
-      state.fetchingState = 'pending';
-    },
-    [fetchInfo.fulfilled]: (state, action) => {
-      state.fetchingState = 'finished';
-    },
-    [fetchInfo.rejected]: (state, action) => {
-      state.fetchingState = 'error';
-    },
+    [fetchInfo.pending]: (state) => ({ ...state, fetchingState: 'pending' }),
+    [fetchInfo.fulfilled]: (state) => ({ ...state, fetchingState: 'finished' }),
+    [fetchInfo.rejected]: (state) => ({ ...state, fetchingState: 'error' }),
 
   },
 });
