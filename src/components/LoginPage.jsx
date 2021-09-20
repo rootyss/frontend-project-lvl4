@@ -108,7 +108,7 @@ const LoginPage = () => {
                   type="submit"
                   className="w-100 mb-3"
                   variant="outline-primary"
-                  disabled={fetchingState === 'pending'}
+                  disabled={logInState === 'pending'}
                 >
                   Войти
                 </Button>

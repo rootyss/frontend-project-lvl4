@@ -24,16 +24,16 @@ const channelsInfoSlice = createSlice({
     currentChannelId: 1,
   },
   reducers: {
-    addChanel(_state, _action) {},
-    removeChanel(_state, _action) {},
-    renameChanel(_state, _action) {},
+    addChanel(state, action) {},
+    removeChanel(state, action) {},
+    renameChanel(state, action) {},
   },
   extraReducers: {
-    [fetchInfo.pending]: (_state, _action) => {},
+    [fetchInfo.pending]: (state, action) => {},
     [fetchInfo.fulfilled]: (state, action) => {
       state.channels = action.payload.channels;
     },
-    [fetchInfo.rejected]: (_state, _action) => {},
+    [fetchInfo.rejected]: (state, action) => {},
   },
 });
 
@@ -46,12 +46,33 @@ const messagesInfoSlice = createSlice({
     messages: [],
   },
   extraReducers: {
-    [fetchInfo.pending]: (state, action_state, _action) => {},
+    [fetchInfo.pending]: (state, action) => {},
     [fetchInfo.fulfilled]: (state, action) => {
       state.messages = action.payload.messages;
     },
-    [fetchInfo.rejected]: (_state, _action) => {},
+    [fetchInfo.rejected]: (state, action) => {},
   },
 });
 
 export const messagesInfoSliceReducer = messagesInfoSlice.reducer;
+
+const fetchingState = createSlice({
+  name: 'fetchingState',
+  initialState: {
+    fetchingState: 'none',
+  },
+  extraReducers: {
+    [fetchInfo.pending]: (state, action) => {
+      state.fetchingState = 'pending';
+    },
+    [fetchInfo.fulfilled]: (state, action) => {
+      state.fetchingState = 'finished';
+    },
+    [fetchInfo.rejected]: (state, action) => {
+      state.fetchingState = 'error';
+    },
+
+  },
+});
+
+export const fetchingStateSliceReducer = fetchingState.reducer;
