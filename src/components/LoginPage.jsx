@@ -17,7 +17,7 @@ const LoginPage = () => {
   const auth = useAuth();
 
   const [authFailed, setAuthFailed] = useState(false);
-  const [fetchingState, setFetchingState] = useState('none');
+  const [logInState, setLogInState] = useState('none');
 
   const inputRef = useRef();
   const location = useLocation();
@@ -41,16 +41,16 @@ const LoginPage = () => {
     validationSchema: SignupSchema,
     onSubmit: async (values) => {
       setAuthFailed(false);
-      setFetchingState('pending');
+      setLogInState('pending');
       try {
         const resp = await axios.post('/api/v1/login', values);
-        setFetchingState('finished');
+        setLogInState('finished');
         localStorage.setItem('user', JSON.stringify(resp.data));
         auth.logIn();
         const { from } = location.state || { from: { pathname: '/' } };
         history.replace(from);
       } catch (err) {
-        setFetchingState('error');
+        setLogInState('error');
         if (err.isAxiosError && err.response.status === 401) {
           setAuthFailed(true);
           inputRef.current.select();
