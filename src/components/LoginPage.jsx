@@ -24,7 +24,6 @@ const LoginPage = () => {
   const history = useHistory();
 
   useEffect(() => {
-
     inputRef.current.focus();
   }, []);
 

@@ -2,32 +2,45 @@
 
 import 'core-js/stable/index.js';
 import 'regenerator-runtime/runtime.js';
-import { Provider } from 'react-redux';
+import { Provider, useDispatch } from 'react-redux';
 import '../assets/application.scss';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { io } from 'socket.io-client';
 import App from './App.jsx';
 import store from './store';
-import { io } from "socket.io-client";
 import apiContext from './context/apiContext.jsx';
-import useAPI from './hooks/useAPI.jsx';
 import { addMessage } from './store/slice.js';
-import { useDispatch } from 'react-redux';
+import actions from './apiConstants.js';
 
 if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
-};
+}
 
 const APIProvider = ({ children }) => {
   const dispatch = useDispatch();
   const socket = io();
 
-socket.on('newMessage', (data) => {
-  dispatch(addMessage({ messageData: data }))
-});
+  const emitAcknowledgement = (action) => (data) => {
+    const timer = setTimeout(() => {
+      socket.emit(action, data, (resp) => {
+        if (resp.status === 'ok') {
+          clearTimeout(timer);
+        }
+      });
+    });
+  };
+
+  const api = {
+    sendMessage: emitAcknowledgement(actions.newMessage),
+  };
+
+  socket.on('newMessage', (data) => {
+    dispatch(addMessage({ messageData: data }));
+  });
 
   return (
-    <apiContext.Provider value={{ socket }}>
+    <apiContext.Provider value={{ api }}>
       {children}
     </apiContext.Provider>
   );

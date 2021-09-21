@@ -1,47 +1,51 @@
-import React, { useEffect, useRef  } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Spinner } from 'react-bootstrap';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
 import Channels from './Channels.jsx';
 import { addChanel, fetchInfo } from '../store/slice.js';
 import Messages from './Messages.jsx';
-import { useFormik } from 'formik';
-import { getUsername } from '.././utils.js';
+import { getUsername } from '../utils.js';
 import useAPI from '../hooks/useAPI.jsx';
 
-const Chat = () => {
+const ChatWindow = () => {
+  const textInput = useRef();
   const dispatch = useDispatch();
-  const { fetchingState } = useSelector((state) => state.fetchingState);
   const channelId = useSelector((state) => state.channelsInfo.currentChannelId);
   const username = getUsername();
-  const textInput = useRef();
-
-const { socket } = useAPI();
+  const { api: { sendMessage } } = useAPI();
 
   useEffect(() => {
-    dispatch(fetchInfo());
-  }, [dispatch]);
+    textInput.current.focus();
+  }, []);
 
-const formik = useFormik({
+  const messageSchema = yup.object({
+    body: yup.string().trim().required(),
+  });
+
+  const formik = useFormik({
     initialValues: {
       body: '',
     },
-    onSubmit: async (values, {resetForm}) => {
+    validationSchema: messageSchema,
+    onSubmit: async (values, { resetForm }) => {
       const data = {
         body: values.body,
         username,
         channelId,
       };
-       socket.emit('newMessage', data);
-       resetForm()
+      try {
+        sendMessage(data);
+        resetForm();
+        textInput.current.select();
+      } catch (err) {
+        console.log(err);
+      }
     },
   });
 
-useEffect(() => {
-    console.log(textInput.current);
-    textInput.current.focus();
-  }, []);
-
-  const vDom = (
+  return (
     <div className="row h-100 bg-white flex-md-row">
       <div className="col-4 col-md-2 border-end pt-5 px-0 bg-light">
         <div className="d-flex justify-content-between mb-2 ps-4 pe-2">
@@ -68,7 +72,7 @@ useEffect(() => {
               noValidate=""
               className="py-1 border rounded-2"
               onSubmit={formik.handleSubmit}
-              >
+            >
               <div className="input-group has-validation">
                 <input
                   name="body"
@@ -78,6 +82,7 @@ useEffect(() => {
                   onChange={formik.handleChange}
                   value={formik.values.body}
                   ref={textInput}
+                  maxLength={400}
                 />
                 <div className="input-group-append">
                   <button disabled="" type="submit" className="btn btn-group-vertical">
@@ -94,10 +99,19 @@ useEffect(() => {
       </div>
     </div>
   );
+};
+
+const Chat = () => {
+  const dispatch = useDispatch();
+  const { fetchingState } = useSelector((state) => state.fetchingState);
+
+  useEffect(() => {
+    dispatch(fetchInfo());
+  }, [dispatch]);
 
   return (
     <div className="container h-100 my-4 overflow-hidden rounded shadow">
-      {fetchingState !== 'finished' ? <Spinner animation="border" /> : vDom}
+      {fetchingState !== 'finished' ? <Spinner animation="border" /> : <ChatWindow />}
     </div>
   );
 };

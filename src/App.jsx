@@ -42,9 +42,8 @@ const ChatRoute = ({ children, path }) => {
   );
 };
 
-const App = () => {
-
-  return (<AuthProvider>
+const App = () => (
+  <AuthProvider>
     <Router>
       <div className="d-flex flex-column h-100">
         <NavBar />
@@ -62,6 +61,6 @@ const App = () => {
       </div>
     </Router>
   </AuthProvider>
-)};
+);
 
 export default App;

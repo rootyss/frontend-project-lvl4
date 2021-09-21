@@ -31,7 +31,7 @@ const Channel = ({
           <span className="me-1">#</span>
           1234
         </button>
-        <button aria-haspopup="true" aria-expanded="false" type="button" className={buttonClassnameRemovable} />
+        <button aria-haspopup="true" aria-label="send" aria-expanded="false" type="button" className={buttonClassnameRemovable} />
         <div
           x-placement="bottom-start"
           aria-labelledby=""
