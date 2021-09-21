@@ -40,6 +40,12 @@ const messagesInfoSlice = createSlice({
   initialState: {
     messages: [],
   },
+  reducers: {
+    addMessage: (state, action) => {
+      const { messageData } = action.payload;
+      state.messages.push(messageData);
+    },
+  },
   extraReducers: {
     [fetchInfo.fulfilled]: (state, action) => {
       const { messages } = action.payload;
@@ -47,7 +53,7 @@ const messagesInfoSlice = createSlice({
     },
   },
 });
-
+export const { addMessage } = messagesInfoSlice.actions;
 export const messagesInfoSliceReducer = messagesInfoSlice.reducer;
 
 const fetchingState = createSlice({

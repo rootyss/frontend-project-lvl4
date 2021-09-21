@@ -11,7 +11,7 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios';
 import pic from '../img/1.jpg';
-import useAuth from '../hooks/index.jsx';
+import useAuth from '../hooks/useAuth.jsx';
 
 const LoginPage = () => {
   const auth = useAuth();
@@ -24,6 +24,7 @@ const LoginPage = () => {
   const history = useHistory();
 
   useEffect(() => {
+
     inputRef.current.focus();
   }, []);
 

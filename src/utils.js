@@ -6,6 +6,14 @@ export const getUserToken = () => {
   return null;
 };
 
+export const getUsername = () => {
+  const userData = JSON.parse(localStorage.getItem('user'));
+  if (userData) {
+    return userData.username;
+  }
+  return null;
+};
+
 export const isAuth = () => getUserToken() !== null;
 
 export const getAuthHeader = () => {

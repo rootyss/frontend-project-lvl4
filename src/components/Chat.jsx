@@ -1,16 +1,45 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef  } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Spinner } from 'react-bootstrap';
 import Channels from './Channels.jsx';
 import { addChanel, fetchInfo } from '../store/slice.js';
 import Messages from './Messages.jsx';
+import { useFormik } from 'formik';
+import { getUsername } from '.././utils.js';
+import useAPI from '../hooks/useAPI.jsx';
 
 const Chat = () => {
   const dispatch = useDispatch();
   const { fetchingState } = useSelector((state) => state.fetchingState);
+  const channelId = useSelector((state) => state.channelsInfo.currentChannelId);
+  const username = getUsername();
+  const textInput = useRef();
+
+const { socket } = useAPI();
+
   useEffect(() => {
     dispatch(fetchInfo());
   }, [dispatch]);
+
+const formik = useFormik({
+    initialValues: {
+      body: '',
+    },
+    onSubmit: async (values, {resetForm}) => {
+      const data = {
+        body: values.body,
+        username,
+        channelId,
+      };
+       socket.emit('newMessage', data);
+       resetForm()
+    },
+  });
+
+useEffect(() => {
+    console.log(textInput.current);
+    textInput.current.focus();
+  }, []);
 
   const vDom = (
     <div className="row h-100 bg-white flex-md-row">
@@ -35,9 +64,21 @@ const Chat = () => {
           </div>
           <Messages />
           <div className="mt-auto px-5 py-3">
-            <form noValidate="" className="py-1 border rounded-2">
+            <form
+              noValidate=""
+              className="py-1 border rounded-2"
+              onSubmit={formik.handleSubmit}
+              >
               <div className="input-group has-validation">
-                <input name="body" data-testid="new-message" placeholder="Введите сообщение..." className="border-0 p-0 ps-2 form-control" />
+                <input
+                  name="body"
+                  data-testid="new-message"
+                  placeholder="Введите сообщение..."
+                  className="border-0 p-0 ps-2 form-control"
+                  onChange={formik.handleChange}
+                  value={formik.values.body}
+                  ref={textInput}
+                />
                 <div className="input-group-append">
                   <button disabled="" type="submit" className="btn btn-group-vertical">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="20" height="20" fill="currentColor">

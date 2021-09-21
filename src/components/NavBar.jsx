@@ -6,10 +6,10 @@ import {
   Navbar,
   Button,
 } from 'react-bootstrap';
-import authContext from '../context/index.jsx';
+import useAuth from '../hooks/useAuth.jsx';
 
 const ButtonLogOut = () => {
-  const auth = useContext(authContext);
+  const auth = useAuth();
 
   return (
     auth.loggedIn ? <Button onClick={auth.logOut}>Exit</Button> : null

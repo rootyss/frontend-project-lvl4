@@ -9,8 +9,8 @@ import LoginPage from './components/LoginPage.jsx';
 import NoMatch from './components/NoMatch.jsx';
 import Chat from './components/Chat.jsx';
 import NavBar from './components/NavBar.jsx';
-import authContext from './context/index.jsx';
-import useAuth from './hooks/index.jsx';
+import authContext from './context/authContext.jsx';
+import useAuth from './hooks/useAuth.jsx';
 import { isAuth } from './utils.js';
 
 const AuthProvider = ({ children }) => {
@@ -42,8 +42,9 @@ const ChatRoute = ({ children, path }) => {
   );
 };
 
-const App = () => (
-  <AuthProvider>
+const App = () => {
+
+  return (<AuthProvider>
     <Router>
       <div className="d-flex flex-column h-100">
         <NavBar />
@@ -61,6 +62,6 @@ const App = () => (
       </div>
     </Router>
   </AuthProvider>
-);
+)};
 
 export default App;
