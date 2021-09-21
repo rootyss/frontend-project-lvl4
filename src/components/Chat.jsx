@@ -36,7 +36,7 @@ const ChatWindow = () => {
         channelId,
       };
       try {
-        sendMessage(data);
+        await sendMessage(data);
         resetForm();
         textInput.current.select();
       } catch (err) {

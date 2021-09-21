@@ -21,15 +21,15 @@ const APIProvider = ({ children }) => {
   const dispatch = useDispatch();
   const socket = io();
 
-  const emitAcknowledgement = (action) => (data) => {
-    const timer = setTimeout(() => {
-      socket.emit(action, data, (resp) => {
-        if (resp.status === 'ok') {
-          clearTimeout(timer);
-        }
-      });
+  const emitAcknowledgement = (action) => (data) => new Promise((response, reject) => {
+    const timer = setTimeout(() => reject(new Error('error connect')), 1000);
+    socket.volatile.emit(action, data, (resp) => {
+      if (resp.status === 'ok') {
+        clearTimeout(timer);
+        response(resp);
+      }
     });
-  };
+  });
 
   const api = {
     sendMessage: emitAcknowledgement(actions.newMessage),
