@@ -25,7 +25,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     inputRef.current.focus();
-  }, []);
+  }, [inputRef]);
 
   const SignupSchema = yup.object({
     username: yup.string().required(),

@@ -18,7 +18,7 @@ const ChatWindow = () => {
 
   useEffect(() => {
     textInput.current.focus();
-  }, []);
+  }, [textInput]);
 
   const messageSchema = yup.object({
     body: yup.string().trim().required(),
