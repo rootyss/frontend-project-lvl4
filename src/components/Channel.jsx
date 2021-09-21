@@ -5,7 +5,7 @@ import {
 } from 'react-bootstrap';
 
 const Channel = ({
-  name, id, isCurrentChannel, removable, handleChangeChannel
+  name, id, isCurrentChannel, removable, handleChangeChannel, handleRemoveChannel, handleRenameChannel
 }) => {
   const classnameDefault = cn('w-100 rounded-0 text-start btn', {
     'btn-secondary': isCurrentChannel,

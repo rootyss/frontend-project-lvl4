@@ -11,6 +11,7 @@ const Channels = () => {
   const handleChangeChannel = (dispatch, id) => () => dispatch(setCurrentChannelId({ id }));
   const handleRemoveChannel = (dispatch, id) => () => {};
   const handleRenameChannel = (dispatch, id) => () => {};
+  
   return (
     <ul className="nav flex-column nav-pills nav-fill px-2">
       {channels.map(({ name, id, removable }) => (
