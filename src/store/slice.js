@@ -23,7 +23,18 @@ const channelsInfoSlice = createSlice({
     channels: [],
     currentChannelId: 1,
   },
-  reducers: {},
+  reducers: {
+    setCurrentChannelId(state, action) {
+      const { id } = action.payload;
+      return {...state, currentChannelId: id};
+    },
+    removeChannel(state, action) {
+      
+    },
+    renameChannel(state, action) {
+
+    },
+  },
   extraReducers: {
     [fetchInfo.fulfilled]: (state, action) => {
       const { channels } = action.payload;
@@ -32,7 +43,13 @@ const channelsInfoSlice = createSlice({
   },
 });
 
-export const { addChanel } = channelsInfoSlice.actions;
+const getChannels = (state) => state.channels.channels;
+const getCurrentChannel = (state) => state.channels.channels
+  .find((channel) => channel.id === state.channels.currentChannelId);
+const getChannelsNames = (state) => state.channels.channels.map((ch) => ch.name);
+
+export {getChannels, getCurrentChannel, getChannelsNames};
+export const { setCurrentChannelId, removeChannel, renameChannel } = channelsInfoSlice.actions;
 export const channelsInfoSliceReducer = channelsInfoSlice.reducer;
 
 const messagesInfoSlice = createSlice({

@@ -1,10 +1,14 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Channel from './Channel.jsx';
+import { setCurrentChannelId, removeChannel, renameChannel } from '../store/slice.js';
 
 const Channels = () => {
+  const dispatch = useDispatch();
   const channels = useSelector((state) => state.channelsInfo.channels);
   const currentChannelId = useSelector((state) => state.channelsInfo.currentChannelId);
+
+  const handleChangeChannel = (dispatch, id) => () => dispatch(setCurrentChannelId({ id }));
 
   return (
     <ul className="nav flex-column nav-pills nav-fill px-2">
@@ -15,6 +19,9 @@ const Channels = () => {
           id={id}
           removable={removable}
           isCurrentChannel={currentChannelId === id}
+          handleChangeChannel={handleChangeChannel(dispatch, id)}
+          handleRemoveChannel={handleRemoveChannel(dispatch, id)}
+          handleRenameChannel={handleRenameChannel(dispatch, id)}
         />
       ))}
     </ul>
