@@ -1,17 +1,24 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Channel from './Channel.jsx';
-import { setCurrentChannelId, removeChannel, renameChannel } from '../store/slice.js';
+import { setCurrentChannelId, openModal } from '../store/slice.js';
+import { modalTypes } from '../constants.js';
+
+const handleChangeChannel = (dispatch, id) => () => dispatch(setCurrentChannelId({ id }));
+const handleRemoveChannel = (dispatch, id) => () => dispatch(openModal({
+  type: modalTypes.removeChannel,
+  id,
+}));
+const handleRenameChannel = (dispatch, id) => () => dispatch(openModal({
+  type: modalTypes.renameChannel,
+  id,
+}));
 
 const Channels = () => {
   const dispatch = useDispatch();
   const channels = useSelector((state) => state.channelsInfo.channels);
   const currentChannelId = useSelector((state) => state.channelsInfo.currentChannelId);
 
-  const handleChangeChannel = (dispatch, id) => () => dispatch(setCurrentChannelId({ id }));
-  const handleRemoveChannel = (dispatch, id) => () => {};
-  const handleRenameChannel = (dispatch, id) => () => {};
-  
   return (
     <ul className="nav flex-column nav-pills nav-fill px-2">
       {channels.map(({ name, id, removable }) => (

@@ -12,6 +12,7 @@ import NavBar from './components/NavBar.jsx';
 import authContext from './context/authContext.jsx';
 import useAuth from './hooks/useAuth.jsx';
 import { isAuth } from './utils.js';
+import ModalWindow from './components/ModalWindow.jsx';
 
 const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(isAuth());
@@ -60,6 +61,7 @@ const App = () => (
         </Switch>
       </div>
     </Router>
+    <ModalWindow />
   </AuthProvider>
 );
 

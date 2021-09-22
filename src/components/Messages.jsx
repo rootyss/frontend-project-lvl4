@@ -24,9 +24,9 @@ const Messages = () => {
             </b>
             {body}
           </div>
-          
+
         ))}
-        <AlwaysScrollToBottom />
+      <AlwaysScrollToBottom />
     </div>
   );
 };

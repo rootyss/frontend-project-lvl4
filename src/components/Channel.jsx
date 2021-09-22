@@ -5,7 +5,12 @@ import {
 } from 'react-bootstrap';
 
 const Channel = ({
-  name, id, isCurrentChannel, removable, handleChangeChannel, handleRemoveChannel, handleRenameChannel
+  name,
+  isCurrentChannel,
+  removable,
+  handleChangeChannel,
+  handleRemoveChannel,
+  handleRenameChannel,
 }) => {
   const classnameDefault = cn('w-100 rounded-0 text-start btn', {
     'btn-secondary': isCurrentChannel,
@@ -27,7 +32,7 @@ const Channel = ({
               onClick={handleChangeChannel}
             >
               <span className="me-2">
-                {'#'}
+                #
               </span>
               {name}
             </Button>
@@ -39,7 +44,7 @@ const Channel = ({
                 onClick={handleChangeChannel}
               >
                 <span className="me-2">
-                  {'#'}
+                  #
                 </span>
                 {name}
               </Button>

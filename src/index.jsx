@@ -10,8 +10,10 @@ import { io } from 'socket.io-client';
 import App from './App.jsx';
 import store from './store';
 import apiContext from './context/apiContext.jsx';
-import { addMessage } from './store/slice.js';
-import actions from './apiConstants.js';
+import {
+  addMessage, addChannel, removeChannel, renameChannel,
+} from './store/slice.js';
+import { api as actions } from './constants.js';
 
 if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
@@ -33,12 +35,24 @@ const APIProvider = ({ children }) => {
 
   const api = {
     sendMessage: emitAcknowledgement(actions.newMessage),
+    addChannel: emitAcknowledgement(actions.addChannel),
+    removeChannel: emitAcknowledgement(actions.removeChannel),
+    renameChannel: emitAcknowledgement(actions.renameChannel),
   };
 
-  socket.on('newMessage', (data) => {
+  socket.on(actions.newMessage, (data) => {
     dispatch(addMessage({ messageData: data }));
   });
-
+  socket.on(actions.addChannel, (data) => {
+    dispatch(addChannel({ channelData: data }));
+  });
+  socket.on(actions.removeChannel, (data) => {
+    dispatch(removeChannel({ channelId: data.id }));
+  });
+  socket.on(actions.renameChannel, (data) => {
+    const { id, name } = data;
+    dispatch(renameChannel({ channelId: id, channelName: name }));
+  });
   return (
     <apiContext.Provider value={{ api }}>
       {children}
