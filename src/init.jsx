@@ -1,7 +1,3 @@
-// @ts-check
-
-import 'core-js/stable/index.js';
-import 'regenerator-runtime/runtime.js';
 import { Provider, useDispatch } from 'react-redux';
 import '../assets/application.scss';
 import React from 'react';
@@ -14,10 +10,18 @@ import {
   addMessage, addChannel, removeChannel, renameChannel,
 } from './store/slice.js';
 import { api as actions } from './constants.js';
+import i18next from 'i18next';
+import { I18nextProvider, initReactI18next } from 'react-i18next';
+import resources from './locales/index.js';
 
-if (process.env.NODE_ENV !== 'production') {
-  localStorage.debug = 'chat:*';
-}
+export default async () => {
+  const i18n = i18next.createInstance();
+  await i18n
+    .use(initReactI18next)
+    .init({
+      resources,
+      fallbackLng: 'ru',
+    });
 
 const APIProvider = ({ children }) => {
   const dispatch = useDispatch();
@@ -62,9 +66,12 @@ const APIProvider = ({ children }) => {
 
 ReactDOM.render(
   <Provider store={store}>
+  <I18nextProvider i18n={i18n}>
     <APIProvider>
       <App />
     </APIProvider>
+    </I18nextProvider>
   </Provider>,
   document.getElementById('chat'),
 );
+};

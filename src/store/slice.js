@@ -87,6 +87,12 @@ const messagesInfoSlice = createSlice({
   },
 });
 
+export const getCurrentChannelMessages = (state) => {
+  const { messages } = state.messagesInfo;
+  const { currentChannelId } = state.channelsInfo;
+  return messages.filter((message) => message.channelId === currentChannelId);
+};
+
 export const { addMessage } = messagesInfoSlice.actions;
 export const messagesInfoSliceReducer = messagesInfoSlice.reducer;
 

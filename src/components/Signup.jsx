@@ -61,6 +61,7 @@ const signupSchema = yup.object({
                 <h1 className="text-center mb-4">Регистрация</h1>
                 <FormGroup className="form-floating mb-3">
                   <FormControl
+                    onBlur={formik.handleBlur}
                     ref={inputRef}
                     type="text"
                     id="username"
@@ -80,6 +81,7 @@ const signupSchema = yup.object({
                 
                 <FormGroup className="form-floating mb-3">
                   <FormControl
+                    onBlur={formik.handleBlur}
                     type="password"
                     id="password"
                     name="password"
@@ -97,6 +99,7 @@ const signupSchema = yup.object({
                 </FormGroup>
                 <FormGroup className="form-floating mb-3">
                   <FormControl
+                    onBlur={formik.handleBlur}
                     type="password"
                     id="checkpassword"
                     name="checkpassword"

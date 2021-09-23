@@ -4,20 +4,30 @@ import { Spinner, Button, FormGroup } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import Channels from './Channels.jsx';
-import { fetchInfo, openModal } from '../store/slice.js';
+import { fetchInfo, openModal, getCurrentChannelMessages, getCurrentChannel } from '../store/slice.js';
 import Messages from './Messages.jsx';
 import { getUsername } from '../utils.js';
 import useAPI from '../hooks/useAPI.jsx';
 import { modalTypes } from '../constants.js';
+import { useTranslation } from 'react-i18next';
 
 const handleAddChannel = (dispatch) => () => dispatch(openModal({ type: modalTypes.addChannel }));
 
 const ChatWindow = () => {
+  const { t } = useTranslation();
   const textInput = useRef();
   const dispatch = useDispatch();
   const channelId = useSelector((state) => state.channelsInfo.currentChannelId);
   const username = getUsername();
   const { api: { sendMessage } } = useAPI();
+
+console.log(t('counts', { count: 0 }));
+
+  const messages = useSelector(getCurrentChannelMessages);
+  const currentChannel = useSelector(getCurrentChannel);
+
+  const name = currentChannel && currentChannel.name;
+  const mlength = messages.length;
 
   useEffect(() => {
     textInput.current.focus();
@@ -67,8 +77,8 @@ const ChatWindow = () => {
       <div className="col p-0 h-100">
         <div className="d-flex flex-column h-100">
           <div className="bg-light mb-4 p-3 shadow-sm small">
-            <p className="m-0"><b># general</b></p>
-            <span className="text-muted">15 сообщений</span>
+            <p className="m-0"><b>{name}</b></p>
+            <span className="text-muted">{t('counts.key', { count: mlength })}</span>
           </div>
           <Messages />
           <div className="mt-auto px-5 py-3">
