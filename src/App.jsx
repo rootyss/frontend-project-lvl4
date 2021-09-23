@@ -13,6 +13,7 @@ import authContext from './context/authContext.jsx';
 import useAuth from './hooks/useAuth.jsx';
 import { isAuth } from './utils.js';
 import ModalWindow from './components/ModalWindow.jsx';
+import Signup from './components/Signup.jsx';
 
 const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(isAuth());
@@ -54,6 +55,9 @@ const App = () => (
           </ChatRoute>
           <Route path="/login">
             <LoginPage />
+          </Route>
+          <Route path="/signup">
+            <Signup />
           </Route>
           <Route path="*">
             <NoMatch />

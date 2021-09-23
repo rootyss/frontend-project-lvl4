@@ -5,7 +5,7 @@ import {
   useLocation,
 } from 'react-router-dom';
 import {
-  Button, Form, FormGroup, FormControl, FormLabel, Card,
+  Button, Form, FormGroup, FormControl, FormLabel, Card, Spinner,
 } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -27,7 +27,7 @@ const LoginPage = () => {
     inputRef.current.focus();
   }, [inputRef]);
 
-  const SignupSchema = yup.object({
+  const SigninSchema = yup.object({
     username: yup.string().required(),
     password: yup.string().required(),
   });
@@ -38,7 +38,7 @@ const LoginPage = () => {
       password: '',
     },
     validateOnChange: false,
-    validationSchema: SignupSchema,
+    validationSchema: SigninSchema,
     onSubmit: async (values) => {
       setAuthFailed(false);
       setLogInState('pending');
@@ -105,20 +105,24 @@ const LoginPage = () => {
                   <Form.Control.Feedback type="invalid">Не верное имя пользователя или пароль</Form.Control.Feedback>
                 </FormGroup>
                 <Button
-                  type="submit"
-                  className="w-100 mb-3"
-                  variant="outline-primary"
-                  disabled={logInState === 'pending'}
-                >
-                  Войти
-                </Button>
+          type="submit"
+          variant="primary"
+          onClick={formik.handleSubmit}
+          disabled={formik.isSubmitting}
+        >
+          {formik.isSubmitting ? (
+            <>
+              <Spinner animation="border" size="sm" role="status" />
+            </>
+          ) : 'Отправить'}
+        </Button>
               </Form>
 
             </Card.Body>
             <Card.Footer>
               <div className="d-flex flex-column align-items-center">
                 <span className="small mb-2">Не зарегистрированы? </span>
-                <Link to="/">Регистрация</Link>
+                <Link to="/signup">Регистрация</Link>
               </div>
             </Card.Footer>
           </Card>
