@@ -21,7 +21,7 @@ const ChatWindow = () => {
   const username = getUsername();
   const { api: { sendMessage } } = useAPI();
 
-console.log(t('counts', { count: 0 }));
+console.log(t('counts.key', { count: 0 }));
 
   const messages = useSelector(getCurrentChannelMessages);
   const currentChannel = useSelector(getCurrentChannel);
@@ -78,7 +78,7 @@ console.log(t('counts', { count: 0 }));
         <div className="d-flex flex-column h-100">
           <div className="bg-light mb-4 p-3 shadow-sm small">
             <p className="m-0"><b>{name}</b></p>
-            <span className="text-muted">{t('counts.key', { count: mlength })}</span>
+            <span className="text-muted">{t('counts', { count: mlength })}</span>
           </div>
           <Messages />
           <div className="mt-auto px-5 py-3">
