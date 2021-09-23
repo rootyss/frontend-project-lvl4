@@ -31,7 +31,7 @@ const signupSchema = yup.object({
       password: '',
       checkpassword: '',
     },
-    validateOnChange: true,
+    validateOnChange: false,
     validationSchema: signupSchema,
     onSubmit: async (values, { setErrors }) => {
       try {
@@ -70,11 +70,11 @@ const signupSchema = yup.object({
                     placeholder="Имя пользователя"
                     onChange={formik.handleChange}
                     value={formik.values.username}
-                    isInvalid={formik.errors.username}
+                    isInvalid={formik.touched.username && formik.errors.username}
                   />
                   <FormLabel htmlFor="username">Имя пользователя</FormLabel>
                   <Form.Control.Feedback type="invalid">
-                    {formik.errors.username && 'От 3 до 20 символов'}
+                    {formik.touched.username && formik.errors.username && 'От 3 до 20 символов'}
                   </Form.Control.Feedback>
                 </FormGroup>
                 
@@ -88,11 +88,11 @@ const signupSchema = yup.object({
                     placeholder="Пароль"
                     onChange={formik.handleChange}
                     value={formik.values.password}
-                    isInvalid={formik.errors.password}
+                    isInvalid={formik.touched.password && formik.errors.password}
                   />
                   <FormLabel htmlFor="password">Пароль</FormLabel>
                   <Form.Control.Feedback type="invalid">
-                    {formik.errors.password && 'Не менее 6 символов'}
+                    {formik.touched.password && formik.errors.password && 'Не менее 6 символов'}
                   </Form.Control.Feedback>
                 </FormGroup>
                 <FormGroup className="form-floating mb-3">
@@ -105,11 +105,11 @@ const signupSchema = yup.object({
                     placeholder="Подтвердить пароль"
                     onChange={formik.handleChange}
                     value={formik.values.checkpassword}
-                    isInvalid={formik.errors.checkpassword}
+                    isInvalid={formik.touched.checkpassword && formik.errors.checkpassword}
                   />
-                  <FormLabel htmlFor="chekpassword">Подтвердить пароль</FormLabel>
+                  <FormLabel htmlFor="checkpassword">Подтвердить пароль</FormLabel>
                   <Form.Control.Feedback type="invalid">
-                    {formik.errors.checkpassword && 'Пароли должны совпадать'}
+                    {formik.touched.checkpassword && formik.errors.checkpassword && 'Пароли должны совпадать'}
                   </Form.Control.Feedback>
                 </FormGroup>
                 <Button
