@@ -4,9 +4,9 @@ import {
 } from 'react-bootstrap';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
 import useAPI from '../hooks/useAPI.jsx';
 import { setCurrentChannelId } from '../store/slice.js';
-import { useTranslation } from 'react-i18next';
 
 const ModalCreateChannel = ({ close, channelsNames, dispatch }) => {
   const { api: { addChannel } } = useAPI();

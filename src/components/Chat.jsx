@@ -3,13 +3,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Spinner, Button, FormGroup } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import { useTranslation } from 'react-i18next';
 import Channels from './Channels.jsx';
-import { fetchInfo, openModal, getCurrentChannelMessages, getCurrentChannel } from '../store/slice.js';
+import {
+  fetchInfo, openModal, getCurrentChannelMessages, getCurrentChannel,
+} from '../store/slice.js';
 import Messages from './Messages.jsx';
 import { getUsername } from '../utils.js';
 import useAPI from '../hooks/useAPI.jsx';
 import { modalTypes } from '../constants.js';
-import { useTranslation } from 'react-i18next';
 
 const handleAddChannel = (dispatch) => () => dispatch(openModal({ type: modalTypes.addChannel }));
 

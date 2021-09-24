@@ -2,13 +2,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import {
   Button, Form, FormGroup, FormControl, FormLabel, Card,
 } from 'react-bootstrap';
-import pic from '.././img/signup.jpeg';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import useAuth from '../hooks/useAuth.jsx';
 import axios from 'axios';
-import { useHistory,} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import useAuth from '../hooks/useAuth.jsx';
+import pic from '../img/signup.jpeg';
 
 const Signup = () => {
   const [errorSignup, setErrorSignup] = useState(false);
@@ -22,7 +22,7 @@ const Signup = () => {
     inputRef.current.focus();
   }, [inputRef]);
 
-const signupSchema = yup.object({
+  const signupSchema = yup.object({
     username: yup.string().required(t('errors.required')).min(3, t('errors.nameLength')).max(20, t('errors.nameLength')),
     password: yup.string().required(t('errors.required')).min(6, t('errors.passLength')),
     checkpassword: yup.string().oneOf([yup.ref('password'), null], t('errors.passMatch')),
@@ -53,17 +53,17 @@ const signupSchema = yup.object({
     },
   });
 
- return (
-   <div className="container-fluid h-100">
+  return (
+    <div className="container-fluid h-100">
       <div className="row justify-content-center align-content-center h-100">
         <div className="col-12 col-md-8 col-xxl-6">
-      <Card className="card shadow-sm">
+          <Card className="card shadow-sm">
             <Card.Body className="card-body d-flex flex-column flex-md-row justify-content-around align-items-center p-5">
-               <div>
-               <img src={pic} className="rounded-circle" alt="Регистрация" />
-               </div>
+              <div>
+                <img src={pic} className="rounded-circle" alt="Регистрация" />
+              </div>
 
-               <Form className="w-50" onSubmit={formik.handleSubmit}>
+              <Form className="w-50" onSubmit={formik.handleSubmit}>
                 <h1 className="text-center mb-4">{t('signUp.h1')}</h1>
                 <FormGroup className="form-floating mb-3">
                   <FormControl
@@ -77,14 +77,14 @@ const signupSchema = yup.object({
                     placeholder={t('placeholders.username')}
                     onChange={formik.handleChange}
                     value={formik.values.username}
-                    isInvalid={formik.touched.checkpassword && formik.errors.checkpassword || errorSignup && t('errors.exist')}
+                    isInvalid={(formik.touched.username && formik.errors.username) || errorSignup}
                   />
                   <FormLabel htmlFor="username">{t('placeholders.username')}</FormLabel>
                   <Form.Control.Feedback type="invalid">
                     {formik.touched.username && formik.errors.username}
                   </Form.Control.Feedback>
                 </FormGroup>
-                
+
                 <FormGroup className="form-floating mb-3">
                   <FormControl
                     onBlur={formik.handleBlur}
@@ -117,10 +117,14 @@ const signupSchema = yup.object({
                     isInvalid={formik.touched.checkpassword && formik.errors.checkpassword}
                   />
                   <FormLabel htmlFor="checkpassword">{t('placeholders.confirmPass')}</FormLabel>
+                  {errorSignup ? (
+                    <div style={{ color: '#dc3545', fontSize: `${0.875}em`, margintTop: `${0.25}rem` }}>
+                      {t('errors.exist')}
+                      {' '}
+                    </div>
+                  ) : null}
                   <Form.Control.Feedback type="invalid">
-                  {errorSignup && t('errors.exist')}
                     {formik.touched.checkpassword && formik.errors.checkpassword}
-                    
                   </Form.Control.Feedback>
                 </FormGroup>
                 <Button
@@ -132,13 +136,13 @@ const signupSchema = yup.object({
                 </Button>
               </Form>
             </Card.Body>
-      </Card>
-       </div>
+          </Card>
+        </div>
 
       </div>
 
     </div>
- );
+  );
 };
 
 export default Signup;

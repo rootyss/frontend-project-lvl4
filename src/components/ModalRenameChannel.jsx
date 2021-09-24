@@ -4,8 +4,8 @@ import {
 } from 'react-bootstrap';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import useAPI from '../hooks/useAPI.jsx';
 import { useTranslation } from 'react-i18next';
+import useAPI from '../hooks/useAPI.jsx';
 
 const ModalCreateChannel = ({
   close, channelId, channels, channelsNames,

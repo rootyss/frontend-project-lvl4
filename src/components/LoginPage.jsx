@@ -10,15 +10,14 @@ import {
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 import pic from '../img/1.jpg';
 import useAuth from '../hooks/useAuth.jsx';
-import { useTranslation } from 'react-i18next';
 
 const LoginPage = () => {
   const auth = useAuth();
 
   const [authFailed, setAuthFailed] = useState(false);
-  const [logInState, setLogInState] = useState('none');
 
   const { t } = useTranslation();
   const inputRef = useRef();
@@ -43,16 +42,13 @@ const LoginPage = () => {
     validationSchema: SigninSchema,
     onSubmit: async (values) => {
       setAuthFailed(false);
-      setLogInState('pending');
       try {
         const resp = await axios.post('/api/v1/login', values);
-        setLogInState('finished');
         localStorage.setItem('user', JSON.stringify(resp.data));
         auth.logIn();
         const { from } = location.state || { from: { pathname: '/' } };
         history.replace(from);
       } catch (err) {
-        setLogInState('error');
         if (err.isAxiosError && err.response.status === 401) {
           setAuthFailed(true);
           inputRef.current.select();
@@ -107,17 +103,17 @@ const LoginPage = () => {
                   <Form.Control.Feedback type="invalid">{t('errors.unauthorized')}</Form.Control.Feedback>
                 </FormGroup>
                 <Button
-          type="submit"
-          variant="primary"
-          onClick={formik.handleSubmit}
-          disabled={formik.isSubmitting}
-        >
-          {formik.isSubmitting ? (
-            <>
-              <Spinner animation="border" size="sm" role="status" />
-            </>
-          ) : t('buttons.send')}
-        </Button>
+                  type="submit"
+                  variant="primary"
+                  onClick={formik.handleSubmit}
+                  disabled={formik.isSubmitting}
+                >
+                  {formik.isSubmitting ? (
+                    <>
+                      <Spinner animation="border" size="sm" role="status" />
+                    </>
+                  ) : t('buttons.send')}
+                </Button>
               </Form>
 
             </Card.Body>

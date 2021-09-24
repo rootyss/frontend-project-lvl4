@@ -9,13 +9,13 @@ export default {
     placeholders: {
       messageText: 'Введите сообщение...',
       username: 'Ваш ник',
-      password: "Пароль",
+      password: 'Пароль',
       confirmPass: 'Подтвердить пароль',
     },
     modals: {
-     addChannel: 'Добавить канал',
-     removeChannel: 'Удалить канал',
-     renameChannel: 'Переименовать канал',
+      addChannel: 'Добавить канал',
+      removeChannel: 'Удалить канал',
+      renameChannel: 'Переименовать канал',
     },
     counts: {
       key_one: '{{count}} сообщение',
@@ -53,7 +53,6 @@ export default {
       passLength: 'Не менее 6 символов',
       passMatch: 'Пароли должны совпадать',
       exist: 'Логин занят',
-      default: 'Неизвестная ошибка',
-    }
+    },
   },
 };

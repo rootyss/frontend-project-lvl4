@@ -6,8 +6,8 @@ import {
   Navbar,
   Button,
 } from 'react-bootstrap';
-import useAuth from '../hooks/useAuth.jsx';
 import { useTranslation } from 'react-i18next';
+import useAuth from '../hooks/useAuth.jsx';
 
 const ButtonLogOut = () => {
   const auth = useAuth();
@@ -19,13 +19,13 @@ const ButtonLogOut = () => {
 
 const NavBar = () => {
   const { t } = useTranslation();
-return (
-  <Navbar bg="white" expand="lg" className="shadow-sm">
-    <div className="container">
-      <Link className="navbar-brand" to="/">{t('navBar.nameProject')}</Link>
-      <ButtonLogOut />
-    </div>
-  </Navbar>
+  return (
+    <Navbar bg="white" expand="lg" className="shadow-sm">
+      <div className="container">
+        <Link className="navbar-brand" to="/">{t('navBar.nameProject')}</Link>
+        <ButtonLogOut />
+      </div>
+    </Navbar>
   );
 };
 

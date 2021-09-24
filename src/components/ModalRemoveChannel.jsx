@@ -3,8 +3,8 @@ import { useFormik } from 'formik';
 import {
   Button, FormGroup, Modal, Spinner,
 } from 'react-bootstrap';
-import useAPI from '../hooks/useAPI.jsx';
 import { useTranslation } from 'react-i18next';
+import useAPI from '../hooks/useAPI.jsx';
 
 const ModalRemoveChannel = ({ close, channelId }) => {
   const { api: { removeChannel } } = useAPI();
