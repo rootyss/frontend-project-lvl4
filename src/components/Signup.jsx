@@ -46,8 +46,6 @@ const signupSchema = yup.object({
       } catch (err) {
         if (err.response.status === 409) {
           setErrorSignup(true);
-          console.log(err.response.status);
-          console.log(errorSignup);
         }
         console.log(err);
         inputRef.current.select();
@@ -79,7 +77,7 @@ const signupSchema = yup.object({
                     placeholder={t('placeholders.username')}
                     onChange={formik.handleChange}
                     value={formik.values.username}
-                    isInvalid={formik.touched.username && formik.errors.username}
+                    isInvalid={formik.touched.checkpassword && formik.errors.checkpassword || errorSignup && t('errors.exist')}
                   />
                   <FormLabel htmlFor="username">{t('placeholders.username')}</FormLabel>
                   <Form.Control.Feedback type="invalid">
@@ -120,8 +118,9 @@ const signupSchema = yup.object({
                   />
                   <FormLabel htmlFor="checkpassword">{t('placeholders.confirmPass')}</FormLabel>
                   <Form.Control.Feedback type="invalid">
+                  {errorSignup && t('errors.exist')}
                     {formik.touched.checkpassword && formik.errors.checkpassword}
-                    {errorSignup && t('errors.busy')}
+                    
                   </Form.Control.Feedback>
                 </FormGroup>
                 <Button
