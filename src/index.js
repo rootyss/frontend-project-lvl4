@@ -5,12 +5,11 @@ import 'regenerator-runtime/runtime.js';
 import init from './init.jsx';
 
 const rollbarProject = new Rollbar({
-  accessToken: process.env.ROLLBAR_TOKEN,
+  accessToken: '89c75f10a43e459ca2394ce3e679ee74',
   captureUncaught: true,
   captureUnhandledRejections: true,
 });
 
-rollbarProject();
 
 if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
