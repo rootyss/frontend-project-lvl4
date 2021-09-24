@@ -22,7 +22,11 @@ module.exports = {
     publicPath: '/assets/',
     historyApiFallback: true,
   },
-
+  plugins: [
+    new MiniCssExtractPlugin(),
+    new webpack.DefinePlugin({
+    'process.env.ROLLBAR_TOKEN': JSON.stringify('89c75f10a43e459ca2394ce3e679ee74'),
+})
   ],
   module: {
     rules: [
