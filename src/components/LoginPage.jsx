@@ -12,6 +12,7 @@ import * as yup from 'yup';
 import axios from 'axios';
 import pic from '../img/1.jpg';
 import useAuth from '../hooks/useAuth.jsx';
+import { useTranslation } from 'react-i18next';
 
 const LoginPage = () => {
   const auth = useAuth();
@@ -19,6 +20,7 @@ const LoginPage = () => {
   const [authFailed, setAuthFailed] = useState(false);
   const [logInState, setLogInState] = useState('none');
 
+  const { t } = useTranslation();
   const inputRef = useRef();
   const location = useLocation();
   const history = useHistory();
@@ -73,7 +75,7 @@ const LoginPage = () => {
               </div>
 
               <Form className="w-50" onSubmit={formik.handleSubmit}>
-                <h1 className="text-center mb-4">Войти</h1>
+                <h1 className="text-center mb-4">{t('loginPage.singin')}</h1>
                 <FormGroup className="form-floating mb-3">
                   <FormControl
                     type="text"
@@ -81,13 +83,13 @@ const LoginPage = () => {
                     name="username"
                     autoComplete="username"
                     required
-                    placeholder="Ваш ник"
+                    placeholder={t('placeholders.username')}
                     onChange={formik.handleChange}
                     value={formik.values.username}
                     isInvalid={authFailed}
                     ref={inputRef}
                   />
-                  <FormLabel htmlFor="username">Ваш ник</FormLabel>
+                  <FormLabel htmlFor="username">{t('placeholders.username')}</FormLabel>
                 </FormGroup>
                 <FormGroup className="form-floating mb-3">
                   <FormControl
@@ -96,13 +98,13 @@ const LoginPage = () => {
                     name="password"
                     autoComplete="current-password"
                     required
-                    placeholder="Пароль"
+                    placeholder={t('placeholders.password')}
                     onChange={formik.handleChange}
                     value={formik.values.password}
                     isInvalid={authFailed}
                   />
-                  <FormLabel htmlFor="password">Пароль</FormLabel>
-                  <Form.Control.Feedback type="invalid">Не верное имя пользователя или пароль</Form.Control.Feedback>
+                  <FormLabel htmlFor="password">{t('placeholders.password')}</FormLabel>
+                  <Form.Control.Feedback type="invalid">{t('errors.unauthorized')}</Form.Control.Feedback>
                 </FormGroup>
                 <Button
           type="submit"
@@ -114,15 +116,15 @@ const LoginPage = () => {
             <>
               <Spinner animation="border" size="sm" role="status" />
             </>
-          ) : 'Отправить'}
+          ) : t('buttons.send')}
         </Button>
               </Form>
 
             </Card.Body>
             <Card.Footer>
               <div className="d-flex flex-column align-items-center">
-                <span className="small mb-2">Не зарегистрированы? </span>
-                <Link to="/signup">Регистрация</Link>
+                <span className="small mb-2">{t('loginPage.notSingIn')}</span>
+                <Link to="/signup">{t('loginPage.signIn')}</Link>
               </div>
             </Card.Footer>
           </Card>

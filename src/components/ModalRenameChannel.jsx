@@ -5,12 +5,13 @@ import {
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import useAPI from '../hooks/useAPI.jsx';
+import { useTranslation } from 'react-i18next';
 
 const ModalCreateChannel = ({
   close, channelId, channels, channelsNames,
 }) => {
   const { name } = channels.find((channel) => channel.id === channelId);
-
+  const { t } = useTranslation();
   const { api: { renameChannel } } = useAPI();
 
   const formik = useFormik({
@@ -20,8 +21,8 @@ const ModalCreateChannel = ({
     validateOnChange: false,
     validationSchema: Yup.object({
       newChannelName: Yup.string().trim()
-        .notOneOf(channelsNames, 'Должно быть уникальным')
-        .required(),
+        .notOneOf(channelsNames, t('errors.uniqNameChanel'))
+        .required(t('errors.required')),
     }),
     onSubmit: async (values) => {
       const channelName = values.newChannelName.trim();
@@ -42,7 +43,7 @@ const ModalCreateChannel = ({
   return (
     <>
       <Modal.Header>
-        <Modal.Title>Переименовать канал</Modal.Title>
+        <Modal.Title>{t('modals.renameChannel')}</Modal.Title>
         <Button
           aria-label="Close"
           variant="secondary"
@@ -74,7 +75,7 @@ const ModalCreateChannel = ({
           onClick={close}
           disabled={formik.isSubmitting}
         >
-          Отмена
+          {t('buttons.cancel')}
         </Button>
         <Button
           type="submit"
@@ -86,7 +87,7 @@ const ModalCreateChannel = ({
             <>
               <Spinner animation="border" size="sm" role="status" />
             </>
-          ) : 'Отправить'}
+          ) : t('buttons.send')}
         </Button>
       </Modal.Footer>
     </>

@@ -4,9 +4,11 @@ import {
   Button, FormGroup, Modal, Spinner,
 } from 'react-bootstrap';
 import useAPI from '../hooks/useAPI.jsx';
+import { useTranslation } from 'react-i18next';
 
 const ModalRemoveChannel = ({ close, channelId }) => {
   const { api: { removeChannel } } = useAPI();
+  const { t } = useTranslation();
 
   const formik = useFormik({
     initialValues: { channelInfo: '' },
@@ -24,7 +26,7 @@ const ModalRemoveChannel = ({ close, channelId }) => {
   return (
     <>
       <Modal.Header>
-        <Modal.Title>Удаление канала</Modal.Title>
+        <Modal.Title>{t('modals.removeChannel')}</Modal.Title>
         <Button
           aria-label="Close"
           variant="secondary"
@@ -33,7 +35,7 @@ const ModalRemoveChannel = ({ close, channelId }) => {
         />
       </Modal.Header>
       <Modal.Body className="text-danger">
-        <p><b>Вы уверены?</b></p>
+        <p><b>{t('modalRemoveChannel.confirm')}</b></p>
         <FormGroup className="text-danger">{formik.errors.channelInfo}</FormGroup>
       </Modal.Body>
       <Modal.Footer className="justify-content-between">
@@ -43,7 +45,7 @@ const ModalRemoveChannel = ({ close, channelId }) => {
           onClick={close}
           disabled={formik.isSubmitting}
         >
-          Отмена
+          {t('buttons.cancel')}
         </Button>
         <Button
           type="submit"
@@ -55,7 +57,7 @@ const ModalRemoveChannel = ({ close, channelId }) => {
             <>
               <Spinner animation="border" size="sm" role="status" />
             </>
-          ) : 'Удалить'}
+          ) : t('buttons.remove')}
         </Button>
       </Modal.Footer>
     </>

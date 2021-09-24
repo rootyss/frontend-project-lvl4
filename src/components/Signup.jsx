@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Button, Form, FormGroup, FormControl, FormLabel, Card,
 } from 'react-bootstrap';
@@ -8,21 +8,24 @@ import * as yup from 'yup';
 import useAuth from '../hooks/useAuth.jsx';
 import axios from 'axios';
 import { useHistory,} from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const Signup = () => {
+  const [errorSignup, setErrorSignup] = useState(false);
 
   const auth = useAuth();
   const inputRef = useRef();
   const history = useHistory();
+  const { t } = useTranslation();
 
   useEffect(() => {
     inputRef.current.focus();
   }, [inputRef]);
 
 const signupSchema = yup.object({
-    username: yup.string().required().min(3).max(20),
-    password: yup.string().required().min(6),
-    checkpassword: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match'),
+    username: yup.string().required(t('errors.required')).min(3, t('errors.nameLength')).max(20, t('errors.nameLength')),
+    password: yup.string().required(t('errors.required')).min(6, t('errors.passLength')),
+    checkpassword: yup.string().oneOf([yup.ref('password'), null], t('errors.passMatch')),
   });
 
   const formik = useFormik({
@@ -33,7 +36,7 @@ const signupSchema = yup.object({
     },
     validateOnChange: false,
     validationSchema: signupSchema,
-    onSubmit: async (values, { setErrors }) => {
+    onSubmit: async (values) => {
       try {
         const { username, password } = values;
         const { data } = await axios.post('/api/v1/signup', { username, password });
@@ -41,6 +44,11 @@ const signupSchema = yup.object({
         auth.logIn();
         history.push('/');
       } catch (err) {
+        if (err.response.status === 409) {
+          setErrorSignup(true);
+          console.log(err.response.status);
+          console.log(errorSignup);
+        }
         console.log(err);
         inputRef.current.select();
       }
@@ -58,7 +66,7 @@ const signupSchema = yup.object({
                </div>
 
                <Form className="w-50" onSubmit={formik.handleSubmit}>
-                <h1 className="text-center mb-4">Регистрация</h1>
+                <h1 className="text-center mb-4">{t('signUp.h1')}</h1>
                 <FormGroup className="form-floating mb-3">
                   <FormControl
                     onBlur={formik.handleBlur}
@@ -68,14 +76,14 @@ const signupSchema = yup.object({
                     name="username"
                     autoComplete="username"
                     required
-                    placeholder="Имя пользователя"
+                    placeholder={t('placeholders.username')}
                     onChange={formik.handleChange}
                     value={formik.values.username}
                     isInvalid={formik.touched.username && formik.errors.username}
                   />
-                  <FormLabel htmlFor="username">Имя пользователя</FormLabel>
+                  <FormLabel htmlFor="username">{t('placeholders.username')}</FormLabel>
                   <Form.Control.Feedback type="invalid">
-                    {formik.touched.username && formik.errors.username && 'От 3 до 20 символов'}
+                    {formik.touched.username && formik.errors.username}
                   </Form.Control.Feedback>
                 </FormGroup>
                 
@@ -87,14 +95,14 @@ const signupSchema = yup.object({
                     name="password"
                     autoComplete="current-password"
                     required
-                    placeholder="Пароль"
+                    placeholder={t('placeholders.password')}
                     onChange={formik.handleChange}
                     value={formik.values.password}
                     isInvalid={formik.touched.password && formik.errors.password}
                   />
-                  <FormLabel htmlFor="password">Пароль</FormLabel>
+                  <FormLabel htmlFor="password">{t('placeholders.password')}</FormLabel>
                   <Form.Control.Feedback type="invalid">
-                    {formik.touched.password && formik.errors.password && 'Не менее 6 символов'}
+                    {formik.touched.password && formik.errors.password}
                   </Form.Control.Feedback>
                 </FormGroup>
                 <FormGroup className="form-floating mb-3">
@@ -105,14 +113,15 @@ const signupSchema = yup.object({
                     name="checkpassword"
                     autoComplete="current-password"
                     required
-                    placeholder="Подтвердить пароль"
+                    placeholder={t('placeholders.confirmPass')}
                     onChange={formik.handleChange}
                     value={formik.values.checkpassword}
                     isInvalid={formik.touched.checkpassword && formik.errors.checkpassword}
                   />
-                  <FormLabel htmlFor="checkpassword">Подтвердить пароль</FormLabel>
+                  <FormLabel htmlFor="checkpassword">{t('placeholders.confirmPass')}</FormLabel>
                   <Form.Control.Feedback type="invalid">
-                    {formik.touched.checkpassword && formik.errors.checkpassword && 'Пароли должны совпадать'}
+                    {formik.touched.checkpassword && formik.errors.checkpassword}
+                    {errorSignup && t('errors.busy')}
                   </Form.Control.Feedback>
                 </FormGroup>
                 <Button
@@ -120,7 +129,7 @@ const signupSchema = yup.object({
                   className="w-100 mb-3"
                   variant="outline-primary"
                 >
-                  Войти
+                  {t('buttons.reg')}
                 </Button>
               </Form>
             </Card.Body>

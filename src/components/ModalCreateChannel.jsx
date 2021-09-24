@@ -6,9 +6,11 @@ import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import useAPI from '../hooks/useAPI.jsx';
 import { setCurrentChannelId } from '../store/slice.js';
+import { useTranslation } from 'react-i18next';
 
 const ModalCreateChannel = ({ close, channelsNames, dispatch }) => {
   const { api: { addChannel } } = useAPI();
+  const { t } = useTranslation();
 
   const formik = useFormik({
     initialValues: {
@@ -17,8 +19,10 @@ const ModalCreateChannel = ({ close, channelsNames, dispatch }) => {
     validateOnChange: false,
     validationSchema: Yup.object({
       channelName: Yup.string().trim()
-        .notOneOf(channelsNames, 'Должно быть уникальным')
-        .required(),
+        .min(3, t('errors.nameLength'))
+        .max(20, t('errors.nameLength'))
+        .notOneOf(channelsNames, t('errors.uniqNameChanel'))
+        .required(t('errors.required')),
     }),
     onSubmit: async (values) => {
       const name = values.channelName.trim();
@@ -41,7 +45,7 @@ const ModalCreateChannel = ({ close, channelsNames, dispatch }) => {
   return (
     <>
       <Modal.Header>
-        <Modal.Title>Добавить канал</Modal.Title>
+        <Modal.Title>{t('modals.addChannel')}</Modal.Title>
         <Button
           aria-label="Close"
           variant="secondary"
@@ -74,7 +78,7 @@ const ModalCreateChannel = ({ close, channelsNames, dispatch }) => {
           onClick={close}
           disabled={formik.isSubmitting}
         >
-          Отмена
+          {t('buttons.cancel')}
         </Button>
         <Button
           type="submit"
@@ -86,7 +90,7 @@ const ModalCreateChannel = ({ close, channelsNames, dispatch }) => {
             <>
               <Spinner animation="border" size="sm" role="status" />
             </>
-          ) : 'Отправить'}
+          ) : t('buttons.send')}
         </Button>
       </Modal.Footer>
     </>

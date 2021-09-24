@@ -3,6 +3,7 @@ import cn from 'classnames';
 import {
   Button, ButtonGroup, Dropdown,
 } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 
 const Channel = ({
   name,
@@ -12,6 +13,8 @@ const Channel = ({
   handleRemoveChannel,
   handleRenameChannel,
 }) => {
+  const { t } = useTranslation();
+
   const classnameDefault = cn('w-100 rounded-0 text-start btn', {
     'btn-secondary': isCurrentChannel,
   });
@@ -50,8 +53,8 @@ const Channel = ({
               </Button>
               <Dropdown.Toggle split className={buttonClassnameRemovable} />
               <Dropdown.Menu title="">
-                <Dropdown.Item onClick={handleRemoveChannel}>Удалить</Dropdown.Item>
-                <Dropdown.Item onClick={handleRenameChannel}>Переименовать</Dropdown.Item>
+                <Dropdown.Item onClick={handleRemoveChannel}>{t('channel.delete')}</Dropdown.Item>
+                <Dropdown.Item onClick={handleRenameChannel}>{t('channel.rename')}</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           )
