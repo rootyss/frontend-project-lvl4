@@ -63,6 +63,7 @@ const ModalCreateChannel = ({
               onChange={formik.handleChange}
               disabled={formik.isSubmitting}
               isInvalid={formik.errors.newChannelName}
+              data-testid="rename-channel"
             />
             <Form.Control.Feedback type="invalid">{formik.errors.newChannelName}</Form.Control.Feedback>
           </InputGroup>

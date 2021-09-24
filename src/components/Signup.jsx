@@ -74,12 +74,12 @@ const Signup = () => {
                     name="username"
                     autoComplete="username"
                     required
-                    placeholder={t('placeholders.username')}
+                    placeholder={t('signUp.username')}
                     onChange={formik.handleChange}
                     value={formik.values.username}
                     isInvalid={(formik.touched.username && formik.errors.username) || errorSignup}
                   />
-                  <FormLabel htmlFor="username">{t('placeholders.username')}</FormLabel>
+                  <FormLabel htmlFor="username">{t('signUp.username')}</FormLabel>
                   <Form.Control.Feedback type="invalid">
                     {formik.touched.username && formik.errors.username}
                   </Form.Control.Feedback>

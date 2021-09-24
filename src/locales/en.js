@@ -41,8 +41,9 @@ export default {
       nameProject: 'Hexlet Chat',
     },
     signUp: {
-      altimg: 'Регистрация',
-      h1: 'Регистрация',
+      altimg: 'Registration',
+      h1: 'Registration',
+      username: 'Username'
     },
     errors: {
       unauthorized: 'Incorrected username or password',

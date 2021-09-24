@@ -65,6 +65,7 @@ const ModalCreateChannel = ({ close, channelsNames, dispatch }) => {
               value={formik.values.channelName}
               onChange={formik.handleChange}
               disabled={formik.isSubmitting}
+              data-testid="add-channel"
               isInvalid={formik.errors.channelName}
             />
             <Form.Control.Feedback type="invalid">{formik.errors.channelName}</Form.Control.Feedback>

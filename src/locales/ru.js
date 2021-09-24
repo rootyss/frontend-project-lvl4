@@ -4,13 +4,13 @@ export default {
       send: 'Отправить',
       cancel: 'Отмена',
       remove: 'Удалить',
-      reg: 'Зарегистрировать',
+      reg: 'Зарегистрироваться',
     },
     placeholders: {
       messageText: 'Введите сообщение...',
       username: 'Ваш ник',
       password: 'Пароль',
-      confirmPass: 'Подтвердить пароль',
+      confirmPass: 'Подтвердите пароль',
     },
     modals: {
       addChannel: 'Добавить канал',
@@ -44,6 +44,7 @@ export default {
     signUp: {
       altimg: 'Регистрация',
       h1: 'Регистрация',
+      username: 'Имя пользователя'
     },
     errors: {
       unauthorized: 'Неверные имя пользователя или пароль',
