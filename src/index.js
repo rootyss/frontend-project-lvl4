@@ -4,13 +4,13 @@ import 'core-js/stable/index.js';
 import 'regenerator-runtime/runtime.js';
 import init from './init.jsx';
 
-const rollbar = new Rollbar({
+const rollbarProject = new Rollbar({
   accessToken: process.env.ROLLBAR_TOKEN,
   captureUncaught: true,
   captureUnhandledRejections: true,
 });
 
-rollbar();
+rollbarProject();
 
 if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
