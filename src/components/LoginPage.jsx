@@ -100,7 +100,7 @@ const LoginPage = () => {
                     isInvalid={authFailed}
                   />
                   <FormLabel htmlFor="password">{t('placeholders.password')}</FormLabel>
-                  <Form.Control.Feedback type="invalid">{t('errors.unauthorized')}</Form.Control.Feedback>
+                  {authFailed ? <Form.Control.Feedback type="invalid">{t('errors.unauthorized')}</Form.Control.Feedback> : null }
                 </FormGroup>
                 <Button
                   type="submit"
