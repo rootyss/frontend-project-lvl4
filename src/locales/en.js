@@ -43,7 +43,7 @@ export default {
     signUp: {
       altimg: 'Registration',
       h1: 'Registration',
-      username: 'Username'
+      username: 'Username',
     },
     errors: {
       unauthorized: 'Incorrected username or password',

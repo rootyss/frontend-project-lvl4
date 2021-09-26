@@ -44,7 +44,7 @@ export default {
     signUp: {
       altimg: 'Регистрация',
       h1: 'Регистрация',
-      username: 'Имя пользователя'
+      username: 'Имя пользователя',
     },
     errors: {
       unauthorized: 'Неверные имя пользователя или пароль',

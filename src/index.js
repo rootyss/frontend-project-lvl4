@@ -5,7 +5,7 @@ import 'regenerator-runtime/runtime.js';
 import init from './init.jsx';
 
 const rollbarProject = new Rollbar({
-  accessToken: process.env.ROLLBAR_TOKEN,
+  accessToken: process.env.ROLLBAR_TOKEN1,
   captureUncaught: true,
   captureUnhandledRejections: true,
   enabled: process.env.NODE_ENV === 'production',
