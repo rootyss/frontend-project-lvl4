@@ -32,7 +32,7 @@ export default {
     loginPage: {
       singin: 'Войти',
       notSingIn: 'Не зарегистрированы? ',
-      signIn: 'Регистрация',
+      signup: 'Регистрация',
     },
     modalRemoveChannel: {
       confirm: 'Вы уверены?',

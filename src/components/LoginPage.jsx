@@ -113,7 +113,7 @@ const LoginPage = () => {
                     <>
                       <Spinner animation="border" size="sm" role="status" />
                     </>
-                  ) : t('buttons.send')}
+                  ) : t('loginPage.singin')}
                 </Button>
               </Form>
 
@@ -121,7 +121,7 @@ const LoginPage = () => {
             <Card.Footer>
               <div className="d-flex flex-column align-items-center">
                 <span className="small mb-2">{t('loginPage.notSingIn')}</span>
-                <Link to="/signup">{t('loginPage.signIn')}</Link>
+                <Link to="/signup">{t('loginPage.signup')}</Link>
               </div>
             </Card.Footer>
           </Card>
