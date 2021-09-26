@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import {
-  Modal, Button, Form, FormControl, FormGroup, Spinner,
+  Modal, Button, Form, FormControl, FormGroup, InputGroup, Spinner,
 } from 'react-bootstrap';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
@@ -55,7 +55,7 @@ const ModalCreateChannel = ({ close, channelsNames, dispatch }) => {
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit}>
-          <FormGroup noValidate className="mt-auto">
+          <InputGroup noValidate className="mt-auto">
             <FormControl
               ref={textInput}
               name="channelName"
@@ -69,6 +69,8 @@ const ModalCreateChannel = ({ close, channelsNames, dispatch }) => {
               isInvalid={formik.errors.channelName}
             />
             <Form.Control.Feedback type="invalid">{formik.errors.channelName}</Form.Control.Feedback>
+          </InputGroup>
+          <FormGroup className="d-flex justify-content-end mt-3">
             <Button
               className="me-2"
               role="button"
