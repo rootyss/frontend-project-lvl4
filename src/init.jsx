@@ -1,8 +1,6 @@
 import { Provider, useDispatch } from 'react-redux';
 import '../assets/application.scss';
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { io } from 'socket.io-client';
 import i18next from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
 import App from './App.jsx';
@@ -14,7 +12,7 @@ import {
 import { api as actions } from './constants.js';
 import resources from './locales/index.js';
 
-export default async () => {
+export default async (socket) => {
   const i18n = i18next.createInstance();
   await i18n
     .use(initReactI18next)
@@ -25,7 +23,7 @@ export default async () => {
 
   const APIProvider = ({ children }) => {
     const dispatch = useDispatch();
-    const socket = io();
+    
 
     const emitAcknowledgement = (action) => (data) => new Promise((response, reject) => {
       const timer = setTimeout(() => reject(new Error('error connect')), 1000);
@@ -64,14 +62,14 @@ export default async () => {
     );
   };
 
-  ReactDOM.render(
+
+   return ( 
     <Provider store={store}>
-      <I18nextProvider i18n={i18n}>
-        <APIProvider>
-          <App />
-        </APIProvider>
-      </I18nextProvider>
-    </Provider>,
-    document.getElementById('chat'),
-  );
+         <I18nextProvider i18n={i18n}>
+           <APIProvider>
+             <App />
+           </APIProvider>
+         </I18nextProvider>
+       </Provider>
+       );
 };
