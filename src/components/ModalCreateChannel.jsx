@@ -87,11 +87,7 @@ const ModalCreateChannel = ({ close, channelsNames, dispatch }) => {
               onClick={formik.handleSubmit}
               disabled={formik.isSubmitting}
             >
-              {formik.isSubmitting ? (
-                <>
-                  <Spinner animation="border" size="sm" role="status" />
-                </>
-              ) : t('buttons.send')}
+              {t('buttons.send')}
             </Button>
           </FormGroup>
         </Form>
