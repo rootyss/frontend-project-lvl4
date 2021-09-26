@@ -72,6 +72,7 @@ const ModalCreateChannel = ({ close, channelsNames, dispatch }) => {
           </InputGroup>
           <FormGroup className="d-flex justify-content-end mt-3">
             <Button
+              className="me-2"
               role="button"
               type="cancel"
               variant="secondary"
@@ -87,7 +88,11 @@ const ModalCreateChannel = ({ close, channelsNames, dispatch }) => {
               onClick={formik.handleSubmit}
               disabled={formik.isSubmitting}
             >
-              {t('buttons.send')}
+              {formik.isSubmitting ? (
+                <>
+                  <Spinner animation="border" size="sm" role="status" />
+                </>
+              ) : t('buttons.send')}
             </Button>
           </FormGroup>
         </Form>
