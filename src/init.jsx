@@ -23,7 +23,6 @@ export default async (socket) => {
 
   const APIProvider = ({ children }) => {
     const dispatch = useDispatch();
-    
 
     const emitAcknowledgement = (action) => (data) => new Promise((response, reject) => {
       const timer = setTimeout(() => reject(new Error('error connect')), 1000);
@@ -62,14 +61,13 @@ export default async (socket) => {
     );
   };
 
-
-   return ( 
+  return (
     <Provider store={store}>
-         <I18nextProvider i18n={i18n}>
-           <APIProvider>
-             <App />
-           </APIProvider>
-         </I18nextProvider>
-       </Provider>
-       );
+      <I18nextProvider i18n={i18n}>
+        <APIProvider>
+          <App />
+        </APIProvider>
+      </I18nextProvider>
+    </Provider>
+  );
 };

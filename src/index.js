@@ -2,9 +2,9 @@
 import Rollbar from 'rollbar';
 import 'core-js/stable/index.js';
 import 'regenerator-runtime/runtime.js';
-import init from './init.jsx';
 import { io } from 'socket.io-client';
 import ReactDOM from 'react-dom';
+import init from './init.jsx';
 
 const start = async () => {
   const socket = io();
@@ -23,8 +23,7 @@ const start = async () => {
   const virtualDom = await init(socket);
 
   ReactDOM.render(virtualDom,
-    document.getElementById('chat'),
-  );
+    document.getElementById('chat'));
 };
 
 start();
