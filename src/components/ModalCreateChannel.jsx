@@ -82,6 +82,7 @@ const ModalCreateChannel = ({ close, channelsNames, dispatch }) => {
           {t('buttons.cancel')}
         </Button>
         <Button
+          role="button"
           type="submit"
           variant="primary"
           onClick={formik.handleSubmit}
