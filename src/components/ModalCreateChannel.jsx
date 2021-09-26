@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import {
-  Modal, Button, Form, FormControl, InputGroup, Spinner,
+  Modal, Button, Form, FormControl, FormGroup, InputGroup, Spinner,
 } from 'react-bootstrap';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
@@ -70,32 +70,33 @@ const ModalCreateChannel = ({ close, channelsNames, dispatch }) => {
             />
             <Form.Control.Feedback type="invalid">{formik.errors.channelName}</Form.Control.Feedback>
           </InputGroup>
+          <FormGroup className="d-flex justify-content-end mt-3">
+            <Button
+              role="button"
+              type="cancel"
+              variant="secondary"
+              onClick={close}
+              disabled={formik.isSubmitting}
+            >
+              {t('buttons.cancel')}
+            </Button>
+            <Button
+              role="button"
+              type="submit"
+              variant="primary"
+              onClick={formik.handleSubmit}
+              disabled={formik.isSubmitting}
+            >
+              {formik.isSubmitting ? (
+                <>
+                  <Spinner animation="border" size="sm" role="status" />
+                </>
+              ) : t('buttons.send')}
+            </Button>
+          </FormGroup>
         </Form>
       </Modal.Body>
-      <Modal.Footer className="justify-content-between">
-        <Button
-          role="button"
-          type="cancel"
-          variant="secondary"
-          onClick={close}
-          disabled={formik.isSubmitting}
-        >
-          {t('buttons.cancel')}
-        </Button>
-        <Button
-          role="button"
-          type="submit"
-          variant="primary"
-          onClick={formik.handleSubmit}
-          disabled={formik.isSubmitting}
-        >
-          {formik.isSubmitting ? (
-            <>
-              <Spinner animation="border" size="sm" role="status" />
-            </>
-          ) : t('buttons.send')}
-        </Button>
-      </Modal.Footer>
+      <Modal.Footer className="justify-content-between" />
     </>
   );
 };

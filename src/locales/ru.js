@@ -2,7 +2,7 @@ export default {
   translation: {
     buttons: {
       send: 'Отправить',
-      cancel: 'Отмена',
+      cancel: 'Отменить',
       remove: 'Удалить',
       reg: 'Зарегистрироваться',
     },
