@@ -92,7 +92,7 @@ const ModalCreateChannel = ({ close, channelsNames, dispatch }) => {
                 <>
                   <Spinner animation="border" size="sm" role="status" />
                 </>
-              ) : t('buttons.send')}
+              ) : '/Отправить/i'}
             </Button>
           </FormGroup>
         </Form>
