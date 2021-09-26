@@ -103,6 +103,7 @@ const LoginPage = () => {
                   {authFailed ? <Form.Control.Feedback type="invalid">{t('errors.unauthorized')}</Form.Control.Feedback> : null }
                 </FormGroup>
                 <Button
+                  role="button"
                   type="submit"
                   variant="primary"
                   onClick={formik.handleSubmit}
