@@ -74,6 +74,7 @@ const ModalCreateChannel = ({ close, channelsNames, dispatch }) => {
       </Modal.Body>
       <Modal.Footer className="justify-content-between">
         <Button
+          role="button"
           type="cancel"
           variant="secondary"
           onClick={close}

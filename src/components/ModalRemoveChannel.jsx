@@ -40,6 +40,7 @@ const ModalRemoveChannel = ({ close, channelId }) => {
       </Modal.Body>
       <Modal.Footer className="justify-content-between">
         <Button
+          role="button"
           type="cancel"
           variant="secondary"
           onClick={close}
@@ -48,6 +49,7 @@ const ModalRemoveChannel = ({ close, channelId }) => {
           {t('buttons.cancel')}
         </Button>
         <Button
+          role="button"
           type="submit"
           variant="danger"
           onClick={formik.handleSubmit}

@@ -71,6 +71,7 @@ const ModalCreateChannel = ({
       </Modal.Body>
       <Modal.Footer className="justify-content-between">
         <Button
+          role="button"
           type="cancel"
           variant="secondary"
           onClick={close}
@@ -79,6 +80,7 @@ const ModalCreateChannel = ({
           {t('buttons.cancel')}
         </Button>
         <Button
+          role="button"
           type="submit"
           variant="primary"
           onClick={formik.handleSubmit}
