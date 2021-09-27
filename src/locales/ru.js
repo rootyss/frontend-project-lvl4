@@ -1,6 +1,7 @@
 export default {
   translation: {
     buttons: {
+      send1: 'Отправить',
       send: 'Отправить',
       cancel: 'Отменить',
       remove: 'Удалить',
