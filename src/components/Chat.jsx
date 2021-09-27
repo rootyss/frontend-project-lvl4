@@ -63,8 +63,6 @@ const ChatWindow = () => {
         <FormGroup className="d-flex justify-content-between mb-3 px-4">
           <span className="mb-0 fs-5">{t('chat.channels')}</span>
           <Button
-            role="button"
-            type="button"
             variant="outline-primary"
             className="py-0 btn-sm"
             onClick={handleAddChannel(dispatch)}
