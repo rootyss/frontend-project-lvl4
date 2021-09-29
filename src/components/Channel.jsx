@@ -35,6 +35,7 @@ const getChannels = ({
   if (!removable) {
     return (
       <Button
+        role="button"
         className={classnameDefault}
         onClick={handleChangeChannel}
       >
@@ -48,6 +49,7 @@ const getChannels = ({
   return (
     <Dropdown className="d-flex" as={ButtonGroup}>
       <Button
+        role="button"
         className={classnameRemovable}
         onClick={handleChangeChannel}
       >

@@ -34,7 +34,7 @@ export default async (socket) => {
         response(resp);
       }
     });
-  })
+  });
 
   const api = {
     sendMessage: withAcknowledgement((...args) => socket.volatile.emit(actions.newMessage, ...args)),
