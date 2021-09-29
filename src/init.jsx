@@ -21,26 +21,26 @@ export default async (socket) => {
       fallbackLng: 'ru',
     });
 
-  const emitAcknowledgement = (action, emit) => (data) => new Promise((response, reject) => {
+  const withAcknowledgement = (socet) => (...args) => new Promise((response, reject) => {
     let called = false;
     const timer = setTimeout(() => {
       if (called) return;
       reject(new Error('error connect'));
     }, 1000);
-    emit(action, data, (resp) => {
+    socket(...args, (resp) => {
       if (resp.status === 'ok') {
         called = true;
         clearTimeout(timer);
         response(resp);
       }
     });
-  });
+  })
 
   const api = {
-    sendMessage: emitAcknowledgement(actions.newMessage, socket.volatile.emit),
-    addChannel: emitAcknowledgement(actions.addChannel, socket.volatile.emit),
-    removeChannel: emitAcknowledgement(actions.removeChannel, socket.volatile.emit),
-    renameChannel: emitAcknowledgement(actions.renameChannel, socket.volatile.emit),
+    sendMessage: (...args) => withAcknowledgement(socket.volatile.emit(actions.newMessage, ...args)),
+    addChannel: (...args) => withAcknowledgement(socket.volatile.emit(actions.addChannel, ...args)),
+    removeChannel: (...args) => withAcknowledgement(socket.volatile.emit(actions.removeChannel, ...args)),
+    renameChannel: (...args) => withAcknowledgement(socket.volatile.emit(actions.renameChannel, ...args)),
   };
 
   socket.on(actions.newMessage, (data) => {
