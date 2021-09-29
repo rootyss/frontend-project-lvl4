@@ -5,7 +5,14 @@ import {
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 
-const Channel = ({
+const getNormalizedNameChannel = (name) => {
+  if (name.length > 15) {
+    return `${name.split('').slice(0, 13).join('')}...`;
+  }
+  return name;
+};
+
+const getChannels = ({
   name,
   isCurrentChannel,
   removable,
@@ -25,42 +32,57 @@ const Channel = ({
     'btn-secondary': isCurrentChannel,
   });
 
+  if (!removable) {
+    return (
+      <Button
+        className={classnameDefault}
+        onClick={handleChangeChannel}
+      >
+        <span className="me-2">
+          #
+        </span>
+        {getNormalizedNameChannel(name)}
+      </Button>
+    );
+  }
   return (
-    <li className="nav-item">
-      {
-        !removable
-          ? (
-            <Button
-              className={classnameDefault}
-              onClick={handleChangeChannel}
-            >
-              <span className="me-2">
-                #
-              </span>
-              {name}
-            </Button>
-          )
-          : (
-            <Dropdown className="d-flex" as={ButtonGroup}>
-              <Button
-                className={classnameRemovable}
-                onClick={handleChangeChannel}
-              >
-                <span className="me-2">
-                  #
-                </span>
-                {name}
-              </Button>
-              <Dropdown.Toggle split className={buttonClassnameRemovable} />
-              <Dropdown.Menu title="">
-                <Dropdown.Item onClick={handleRemoveChannel}>{t('channel.delete')}</Dropdown.Item>
-                <Dropdown.Item onClick={handleRenameChannel}>{t('channel.rename')}</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-          )
-      }
-    </li>
+    <Dropdown className="d-flex" as={ButtonGroup}>
+      <Button
+        className={classnameRemovable}
+        onClick={handleChangeChannel}
+      >
+        <span className="me-2">
+          #
+        </span>
+        {getNormalizedNameChannel(name)}
+      </Button>
+      <Dropdown.Toggle split className={buttonClassnameRemovable} />
+      <Dropdown.Menu title="">
+        <Dropdown.Item onClick={handleRemoveChannel}>{t('channel.delete')}</Dropdown.Item>
+        <Dropdown.Item onClick={handleRenameChannel}>{t('channel.rename')}</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
   );
 };
+
+const Channel = ({
+  name,
+  isCurrentChannel,
+  removable,
+  handleChangeChannel,
+  handleRemoveChannel,
+  handleRenameChannel,
+}) => (
+  <li className="nav-item">
+    {getChannels({
+      name,
+      isCurrentChannel,
+      removable,
+      handleChangeChannel,
+      handleRemoveChannel,
+      handleRenameChannel,
+    })}
+  </li>
+);
 
 export default Channel;

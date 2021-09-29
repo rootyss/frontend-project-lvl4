@@ -9,13 +9,23 @@ import LoginPage from './components/LoginPage.jsx';
 import NoMatch from './components/NoMatch.jsx';
 import Chat from './components/Chat.jsx';
 import NavBar from './components/NavBar.jsx';
-import authContext from './context/authContext.jsx';
+import authContext from './context/authContext.js';
 import useAuth from './hooks/useAuth.jsx';
-import { isAuth } from './utils.js';
-import ModalWindow from './components/ModalWindow.jsx';
+import ModalWindow from './components/Modals/ModalWindow.jsx';
 import Signup from './components/Signup.jsx';
+import routes from './routes.js';
 
 const AuthProvider = ({ children }) => {
+  const getUserToken = () => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+      return user.token;
+    }
+    return null;
+  };
+
+  const isAuth = () => getUserToken() !== null;
+
   const [loggedIn, setLoggedIn] = useState(isAuth());
   const logIn = () => {
     setLoggedIn(true);
@@ -25,8 +35,19 @@ const AuthProvider = ({ children }) => {
     setLoggedIn(false);
   };
 
+  const getUsername = () => {
+    const userData = JSON.parse(localStorage.getItem('user'));
+    if (userData) {
+      return userData.username;
+    }
+    return null;
+  };
+
   return (
-    <authContext.Provider value={{ loggedIn, logIn, logOut }}>
+    <authContext.Provider value={{
+      loggedIn, logIn, logOut, getUsername,
+    }}
+    >
       {children}
     </authContext.Provider>
   );
@@ -39,7 +60,7 @@ const ChatRoute = ({ children, path }) => {
       path={path}
       render={({ location }) => (auth.loggedIn
         ? children
-        : <Redirect to={{ pathname: '/login', state: { from: location } }} />)}
+        : <Redirect to={{ pathname: routes.loginPagePath(), state: { from: location } }} />)}
     />
   );
 };
@@ -53,10 +74,10 @@ const App = () => (
           <ChatRoute exact path="/">
             <Chat />
           </ChatRoute>
-          <Route path="/login">
+          <Route path={routes.loginPagePath()}>
             <LoginPage />
           </Route>
-          <Route path="/signup">
+          <Route path={routes.signupPagePath()}>
             <Signup />
           </Route>
           <Route path="*">

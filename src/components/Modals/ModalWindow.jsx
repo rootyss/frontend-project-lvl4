@@ -1,9 +1,7 @@
 import React from 'react';
 import { Modal } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  getChannels, getChannelsNames, closeModal, getChannelId, getModalInfo,
-} from '../store/slice.js';
+import { closeModal, getModalInfo } from '../../store/slice.js';
 
 import ModalCreateChannel from './ModalCreateChannel.jsx';
 import ModalRenameChannel from './ModalRenameChannel.jsx';
@@ -18,9 +16,6 @@ const modals = {
 const ModalWindow = () => {
   const dispatch = useDispatch();
   const modalInfo = useSelector(getModalInfo);
-  const channelId = useSelector(getChannelId);
-  const channels = useSelector(getChannels);
-  const channelsNames = useSelector(getChannelsNames);
 
   const { type, isOpen } = modalInfo;
   const close = () => dispatch(closeModal());
@@ -35,10 +30,6 @@ const ModalWindow = () => {
     <Modal show={isOpen} onHide={close}>
       <ModalComponent
         close={close}
-        channels={channels}
-        channelId={channelId}
-        channelsNames={channelsNames}
-        dispatch={dispatch}
       />
     </Modal>
   );

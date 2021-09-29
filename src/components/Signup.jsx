@@ -9,6 +9,7 @@ import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import useAuth from '../hooks/useAuth.jsx';
 import pic from '../img/signup.jpeg';
+import routes from '../routes.js';
 
 const Signup = () => {
   const [errorSignup, setErrorSignup] = useState(false);
@@ -39,7 +40,7 @@ const Signup = () => {
     onSubmit: async (values) => {
       try {
         const { username, password } = values;
-        const { data } = await axios.post('/api/v1/signup', { username, password });
+        const { data } = await axios.post(routes.signupPath(), { username, password });
         localStorage.setItem('user', JSON.stringify(data));
         auth.logIn();
         history.push('/');

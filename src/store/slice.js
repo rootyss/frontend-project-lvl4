@@ -1,13 +1,30 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import _ from 'lodash';
-import { getAuthHeader } from '../utils.js';
+import routes from '../routes.js';
+
+const getUserToken = () => {
+  const user = JSON.parse(localStorage.getItem('user'));
+  if (user) {
+    return user.token;
+  }
+  return null;
+};
+const isAuth = () => getUserToken() !== null;
+
+const getAuthHeader = () => {
+  if (isAuth()) {
+    return { Authorization: `Bearer ${getUserToken()}` };
+  }
+
+  return {};
+};
 
 export const fetchInfo = createAsyncThunk(
   'channelsInfo/fetchInfo',
   async () => {
     try {
-      const resp = await axios.get('/api/v1/data', { headers: getAuthHeader() });
+      const resp = await axios.get(routes.dataPath(), { headers: getAuthHeader() });
       return resp.data;
     } catch (err) {
       if (err.isAxiosError) {

@@ -13,6 +13,7 @@ import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import pic from '../img/1.jpg';
 import useAuth from '../hooks/useAuth.jsx';
+import routes from '../routes.js';
 
 const LoginPage = () => {
   const auth = useAuth();
@@ -43,7 +44,7 @@ const LoginPage = () => {
     onSubmit: async (values) => {
       setAuthFailed(false);
       try {
-        const resp = await axios.post('/api/v1/login', values);
+        const resp = await axios.post(routes.loginPath(), values);
         localStorage.setItem('user', JSON.stringify(resp.data));
         auth.logIn();
         const { from } = location.state || { from: { pathname: '/' } };

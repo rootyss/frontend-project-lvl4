@@ -4,11 +4,14 @@ import {
   Button, FormGroup, Modal, Spinner,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import useAPI from '../hooks/useAPI.jsx';
+import { useSelector } from 'react-redux';
+import useAPI from '../../hooks/useAPI.jsx';
+import { getChannelId } from '../../store/slice.js';
 
-const ModalRemoveChannel = ({ close, channelId }) => {
+const ModalRemoveChannel = ({ close }) => {
   const { api: { removeChannel } } = useAPI();
   const { t } = useTranslation();
+  const channelId = useSelector(getChannelId);
 
   const formik = useFormik({
     initialValues: { channelInfo: '' },

@@ -5,14 +5,18 @@ import {
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
-import useAPI from '../hooks/useAPI.jsx';
+import { useSelector } from 'react-redux';
+import useAPI from '../../hooks/useAPI.jsx';
+import { getChannels, getChannelsNames, getChannelId } from '../../store/slice.js';
 
-const ModalCreateChannel = ({
-  close, channelId, channels, channelsNames,
-}) => {
+const ModalCreateChannel = ({ close }) => {
+  const channelId = useSelector(getChannelId);
+  const channels = useSelector(getChannels);
   const { name } = channels.find((channel) => channel.id === channelId);
   const { t } = useTranslation();
   const { api: { renameChannel } } = useAPI();
+
+  const channelsNames = useSelector(getChannelsNames);
 
   const formik = useFormik({
     initialValues: {
