@@ -22,6 +22,7 @@ export default async (socket) => {
     });
 
   const withAcknowledgement = (socketFunc) => (...args) => new Promise((response, reject) => {
+    // eslint-disable-next-line functional/no-let
     let called = false;
     const timer = setTimeout(() => {
       if (called) return;
@@ -37,10 +38,10 @@ export default async (socket) => {
   });
 
   const api = {
-    sendMessage: withAcknowledgement((...args) => socket.volatile.emit(actions.newMessage, ...args)),
+    sendMessage: withAcknowledgement((...args) => socket.volatile.emit(actions.newMessage, ...args)), // eslint-disable-line max-len
     addChannel: withAcknowledgement((...args) => socket.volatile.emit(actions.addChannel, ...args)),
-    removeChannel: withAcknowledgement((...args) => socket.volatile.emit(actions.removeChannel, ...args)),
-    renameChannel: withAcknowledgement((...args) => socket.volatile.emit(actions.renameChannel, ...args)),
+    removeChannel: withAcknowledgement((...args) => socket.volatile.emit(actions.removeChannel, ...args)), // eslint-disable-line max-len
+    renameChannel: withAcknowledgement((...args) => socket.volatile.emit(actions.renameChannel, ...args)), // eslint-disable-line max-len
   };
 
   socket.on(actions.newMessage, (data) => {

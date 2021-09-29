@@ -12,7 +12,7 @@ const getNormalizedNameChannel = (name) => {
   return name;
 };
 
-const getChannels = ({
+const NameChannels = ({
   name,
   isCurrentChannel,
   removable,
@@ -76,7 +76,7 @@ const Channel = ({
   handleRenameChannel,
 }) => (
   <li className="nav-item">
-    {getChannels({
+    {NameChannels({
       name,
       isCurrentChannel,
       removable,

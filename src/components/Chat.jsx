@@ -41,6 +41,7 @@ const Chat = () => {
   const { fetchingState } = useSelector((state) => state.fetchingState);
 
   useEffect(() => {
+    // eslint-disable-next-line functional/no-let
     let isActive = true;
     if (isActive) {
       dispatch(fetchInfo());
