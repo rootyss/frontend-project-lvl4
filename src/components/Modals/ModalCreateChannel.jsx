@@ -43,7 +43,7 @@ const ModalCreateChannel = ({ close }) => {
   const textInput = useRef(null);
   useEffect(() => {
     textInput.current.select();
-  }, [textInput]);
+  }, [channelsNames]);
 
   return (
     <>
