@@ -6,8 +6,8 @@ import {
 import { useTranslation } from 'react-i18next';
 
 const getNormalizedNameChannel = (name) => {
-  if (name.length > 10) {
-    return `${name.split('').slice(0, 10).join('')}...`;
+  if (name.length > 13) {
+    return `${name.split('').slice(0, 13).join('')}...`;
   }
   return name;
 };
