@@ -16,7 +16,7 @@ const FormMessage = () => {
 
   useEffect(() => {
     textInput.current.focus();
-  }, [textInput]);
+  }, [channelId]);
 
   const messageSchema = yup.object({
     body: yup.string().trim().required(),
