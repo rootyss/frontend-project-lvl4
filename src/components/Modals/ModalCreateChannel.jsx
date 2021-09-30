@@ -32,8 +32,8 @@ const ModalCreateChannel = ({ close }) => {
       try {
         const res = await addChannel({ name });
         const { id } = res.data;
-        dispatch(setCurrentChannelId({ id }));
         close();
+        dispatch(setCurrentChannelId({ id }));
       } catch (err) {
         console.log(err);
       }
