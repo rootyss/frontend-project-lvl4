@@ -7,7 +7,8 @@ import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import useAPI from '../../hooks/useAPI.jsx';
-import { getChannels, getChannelsNames, getChannelId } from '../../store/slice.js';
+import { getChannels, getChannelsNames } from '../../store/channelsInfoSlice.js';
+import { getChannelId } from '../../store/modalSlice.js';
 
 const ModalCreateChannel = ({ close }) => {
   const channelId = useSelector(getChannelId);

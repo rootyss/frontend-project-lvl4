@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Spinner } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import Channels from './Channels.jsx';
-import {
-  fetchInfo, getCurrentChannelMessages, getCurrentChannel,
-} from '../store/slice.js';
+import { getCurrentChannelMessages } from '../store/messagesInfoSlice.js';
+import { getCurrentChannel } from '../store/channelsInfoSlice.js';
+import fetchInfo from '../store/createAsyncThunk.js';
 import Messages from './Messages.jsx';
 import FormMessage from './FormMessage.jsx';
 

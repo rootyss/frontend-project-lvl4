@@ -6,7 +6,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import useAPI from '../../hooks/useAPI.jsx';
-import { getChannelId } from '../../store/slice.js';
+import { getChannelId } from '../../store/modalSlice.js';
 
 const ModalRemoveChannel = ({ close }) => {
   const { api: { removeChannel } } = useAPI();

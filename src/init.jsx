@@ -6,9 +6,8 @@ import { I18nextProvider, initReactI18next } from 'react-i18next';
 import App from './App.jsx';
 import store from './store';
 import apiContext from './context/apiContext.js';
-import {
-  addMessage, addChannel, removeChannel, renameChannel,
-} from './store/slice.js';
+import { addMessage } from './store/messagesInfoSlice.js';
+import { addChannel, removeChannel, renameChannel } from './store/channelsInfoSlice.js';
 import { api as actions } from './constants.js';
 import resources from './locales/index.js';
 

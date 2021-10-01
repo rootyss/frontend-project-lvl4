@@ -7,7 +7,7 @@ import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import useAPI from '../../hooks/useAPI.jsx';
-import { setCurrentChannelId, getChannelsNames } from '../../store/slice.js';
+import { setCurrentChannelId, getChannelsNames } from '../../store/channelsInfoSlice.js';
 
 const ModalCreateChannel = ({ close }) => {
   const dispatch = useDispatch();

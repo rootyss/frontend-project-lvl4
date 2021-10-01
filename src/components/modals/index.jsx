@@ -1,11 +1,11 @@
 import React from 'react';
 import { Modal } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeModal, getModalInfo } from '../../store/slice.js';
+import { closeModal, getModalInfo } from '../../store/modalSlice.js';
 
-import ModalCreateChannel from './ModalCreateChannel.jsx';
-import ModalRenameChannel from './ModalRenameChannel.jsx';
-import ModalRemoveChannel from './ModalRemoveChannel.jsx';
+import ModalCreateChannel from './CreateChannel.jsx';
+import ModalRenameChannel from './RenameChannel.jsx';
+import ModalRemoveChannel from './RemoveChannel.jsx';
 
 const modals = {
   addChannel: ModalCreateChannel,

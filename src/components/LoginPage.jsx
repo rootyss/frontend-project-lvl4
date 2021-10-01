@@ -47,7 +47,7 @@ const LoginPage = () => {
         const resp = await axios.post(routes.loginPath(), values);
         localStorage.setItem('user', JSON.stringify(resp.data));
         auth.logIn();
-        const { from } = location.state || { from: { pathname: '/' } };
+        const { from } = location.state || { from: { pathname: routes.host() } };
         history.replace(from);
       } catch (err) {
         if (err.isAxiosError && err.response.status === 401) {
@@ -122,7 +122,7 @@ const LoginPage = () => {
             <Card.Footer>
               <div className="d-flex flex-column align-items-center">
                 <span className="small mb-2">{t('loginPage.notSingIn')}</span>
-                <Link to="/signup">{t('loginPage.signup')}</Link>
+                <Link to={routes.signupPagePath()}>{t('loginPage.signup')}</Link>
               </div>
             </Card.Footer>
           </Card>

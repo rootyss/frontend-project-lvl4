@@ -1,7 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import {
-  channelsInfoSliceReducer, messagesInfoSliceReducer, fetchingStateSliceReducer, modalSliceReducer,
-} from './slice.js';
+import { modalSliceReducer } from './modalSlice.js';
+import { channelsInfoSliceReducer } from './channelsInfoSlice.js';
+import { messagesInfoSliceReducer } from './messagesInfoSlice.js';
+import fetchingStateSliceReducer from './fetchingState.js';
 
 export default configureStore({
   reducer: {

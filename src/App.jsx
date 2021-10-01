@@ -11,41 +11,24 @@ import Chat from './components/Chat.jsx';
 import NavBar from './components/NavBar.jsx';
 import authContext from './context/authContext.js';
 import useAuth from './hooks/useAuth.jsx';
-import ModalWindow from './components/Modals/ModalWindow.jsx';
+import ModalWindow from './components/modals/index.jsx';
 import Signup from './components/Signup.jsx';
 import routes from './routes.js';
+import { getUsername, isAuth } from './utils.js';
 
 const AuthProvider = ({ children }) => {
-  const getUserToken = () => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (user) {
-      return user.token;
-    }
-    return null;
-  };
-
-  const isAuth = () => getUserToken() !== null;
-
-  const [loggedIn, setLoggedIn] = useState(isAuth());
+  const [isGuest, setisGuest] = useState(isAuth());
   const logIn = () => {
-    setLoggedIn(true);
+    setisGuest(true);
   };
   const logOut = () => {
     localStorage.removeItem('user');
-    setLoggedIn(false);
-  };
-
-  const getUsername = () => {
-    const userData = JSON.parse(localStorage.getItem('user'));
-    if (userData) {
-      return userData.username;
-    }
-    return null;
+    setisGuest(false);
   };
 
   return (
     <authContext.Provider value={{
-      loggedIn, logIn, logOut, getUsername,
+      isGuest, logIn, logOut, getUsername,
     }}
     >
       {children}
@@ -53,12 +36,12 @@ const AuthProvider = ({ children }) => {
   );
 };
 
-const ChatRoute = ({ children, path }) => {
+const PrivateRoute = ({ children, path }) => {
   const auth = useAuth();
   return (
     <Route
       path={path}
-      render={({ location }) => (auth.loggedIn
+      render={({ location }) => (auth.isGuest
         ? children
         : <Redirect to={{ pathname: routes.loginPagePath(), state: { from: location } }} />)}
     />
@@ -71,9 +54,9 @@ const App = () => (
       <div className="d-flex flex-column h-100">
         <NavBar />
         <Switch>
-          <ChatRoute exact path="/">
+          <PrivateRoute exact path="/">
             <Chat />
-          </ChatRoute>
+          </PrivateRoute>
           <Route path={routes.loginPagePath()}>
             <LoginPage />
           </Route>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
-  Button, Form, FormGroup, FormControl, FormLabel, Card,
+  Button, Form, FormGroup, FormControl, FormLabel, Card, Spinner,
 } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -43,7 +43,7 @@ const Signup = () => {
         const { data } = await axios.post(routes.signupPath(), { username, password });
         localStorage.setItem('user', JSON.stringify(data));
         auth.logIn();
-        history.push('/');
+        history.push(routes.host());
       } catch (err) {
         if (err.response.status === 409) {
           setErrorSignup(true);
@@ -115,17 +115,17 @@ const Signup = () => {
                     placeholder={t('placeholders.confirmPass')}
                     onChange={formik.handleChange}
                     value={formik.values.checkpassword}
-                    isInvalid={formik.touched.checkpassword && formik.errors.checkpassword}
+                    isInvalid={formik.touched.checkpassword && formik.errors.checkpassword || errorSignup}
                   />
                   <FormLabel htmlFor="checkpassword">{t('placeholders.confirmPass')}</FormLabel>
-                  {errorSignup ? (
+                  <Form.Control.Feedback type="invalid">
+                    {formik.touched.checkpassword && formik.errors.checkpassword}
+                     {errorSignup ? (
                     <div style={{ color: '#dc3545', fontSize: `${0.875}em`, margintTop: `${0.25}rem` }}>
                       {t('errors.exist')}
                       {' '}
                     </div>
                   ) : null}
-                  <Form.Control.Feedback type="invalid">
-                    {formik.touched.checkpassword && formik.errors.checkpassword}
                   </Form.Control.Feedback>
                 </FormGroup>
                 <Button
@@ -133,7 +133,11 @@ const Signup = () => {
                   className="w-100 mb-3"
                   variant="outline-primary"
                 >
-                  {t('buttons.reg')}
+                  {formik.isSubmitting ? (
+                    <>
+                      <Spinner animation="border" size="sm" role="status" />
+                    </>
+                  ) : t('buttons.reg')}
                 </Button>
               </Form>
             </Card.Body>

@@ -13,7 +13,7 @@ const ButtonLogOut = () => {
   const auth = useAuth();
   const { t } = useTranslation();
   return (
-    auth.loggedIn ? <Button onClick={auth.logOut}>{t('navBar.exit')}</Button> : null
+    auth.isGuest ? <Button onClick={auth.logOut}>{t('navBar.exit')}</Button> : null
   );
 };
 

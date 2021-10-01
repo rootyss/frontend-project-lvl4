@@ -5,14 +5,8 @@ import {
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 
-const getNormalizedNameChannel = (name) => {
-  if (name.length > 13) {
-    return `${name.split('').slice(0, 13).join('')}...`;
-  }
-  return name;
-};
-
-const NameChannels = ({
+const renderButtons = ({
+  t,
   name,
   isCurrentChannel,
   removable,
@@ -20,9 +14,7 @@ const NameChannels = ({
   handleRemoveChannel,
   handleRenameChannel,
 }) => {
-  const { t } = useTranslation();
-
-  const classnameDefault = cn('w-100 rounded-0 text-start btn', {
+  const classnameDefault = cn('w-100 rounded-0 text-start btn text-truncate', {
     'btn-secondary': isCurrentChannel,
   });
   const classnameRemovable = cn('w-100 rounded-0 text-start text-truncate btn', {
@@ -42,7 +34,7 @@ const NameChannels = ({
         <span className="me-2">
           #
         </span>
-        {getNormalizedNameChannel(name)}
+        {name}
       </Button>
     );
   }
@@ -56,7 +48,7 @@ const NameChannels = ({
         <span className="me-2">
           #
         </span>
-        {getNormalizedNameChannel(name)}
+        {name}
       </Button>
       <Dropdown.Toggle split className={buttonClassnameRemovable} />
       <Dropdown.Menu title="">
@@ -67,24 +59,28 @@ const NameChannels = ({
   );
 };
 
-const Channel = ({
+const ChannelBox = ({
   name,
   isCurrentChannel,
   removable,
   handleChangeChannel,
   handleRemoveChannel,
   handleRenameChannel,
-}) => (
-  <li className="nav-item">
-    {NameChannels({
-      name,
-      isCurrentChannel,
-      removable,
-      handleChangeChannel,
-      handleRemoveChannel,
-      handleRenameChannel,
-    })}
-  </li>
-);
+}) => {
+  const { t } = useTranslation();
+  return (
+    <li className="nav-item">
+      {renderButtons({
+        t,
+        name,
+        isCurrentChannel,
+        removable,
+        handleChangeChannel,
+        handleRemoveChannel,
+        handleRenameChannel,
+      })}
+    </li>
+  );
+};
 
-export default Channel;
+export default ChannelBox;
