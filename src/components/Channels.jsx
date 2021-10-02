@@ -38,7 +38,7 @@ const Channels = () => {
           <span className="fs-5">+</span>
         </Button>
       </FormGroup>
-      <ul className="nav flex-column nav-pills nav-fill px-2">
+      <ul className="nav flex-column nav-pills nav-fill px-2 d-block">
         {channels.map(({ name, id, removable }) => (
           <ChannelBox
             key={id}

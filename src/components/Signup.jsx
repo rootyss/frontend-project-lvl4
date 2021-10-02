@@ -115,17 +115,18 @@ const Signup = () => {
                     placeholder={t('placeholders.confirmPass')}
                     onChange={formik.handleChange}
                     value={formik.values.checkpassword}
-                    isInvalid={formik.touched.checkpassword && formik.errors.checkpassword || errorSignup}
+                    isInvalid={(formik.touched.checkpassword && formik.errors.checkpassword)
+                      || errorSignup}
                   />
                   <FormLabel htmlFor="checkpassword">{t('placeholders.confirmPass')}</FormLabel>
                   <Form.Control.Feedback type="invalid">
                     {formik.touched.checkpassword && formik.errors.checkpassword}
-                     {errorSignup ? (
-                    <div style={{ color: '#dc3545', fontSize: `${0.875}em`, margintTop: `${0.25}rem` }}>
-                      {t('errors.exist')}
-                      {' '}
-                    </div>
-                  ) : null}
+                    {errorSignup ? (
+                      <div style={{ color: '#dc3545', fontSize: `${0.875}em`, margintTop: `${0.25}rem` }}>
+                        {t('errors.exist')}
+                        {' '}
+                      </div>
+                    ) : null}
                   </Form.Control.Feedback>
                 </FormGroup>
                 <Button
