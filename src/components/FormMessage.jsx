@@ -7,13 +7,15 @@ import { useSelector } from 'react-redux';
 import useAPI from '../hooks/useAPI.jsx';
 import useAuth from '../hooks/useAuth.jsx';
 
+const channelIdSelector = (state) => state.channelsInfo.currentChannelId;
+
 const FormMessage = () => {
   const { getUsername } = useAuth();
   const textInput = useRef();
   const { api: { sendMessage } } = useAPI();
   const { t } = useTranslation();
   const username = getUsername();
-  const channelId = useSelector((state) => state.channelsInfo.currentChannelId);
+  const channelId = useSelector(channelIdSelector);
 
   useEffect(() => {
     textInput.current.focus();

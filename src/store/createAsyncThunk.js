@@ -5,7 +5,7 @@ import { getAuthHeader } from '../utils.js';
 
 export default createAsyncThunk(
   'channelsInfo/fetchInfo',
-  async () => {
+  async (rejectWithValue) => {
     try {
       const resp = await axios.get(routes.dataPath(), { headers: getAuthHeader() });
       return resp.data;
@@ -13,7 +13,7 @@ export default createAsyncThunk(
       if (err.isAxiosError) {
         return err.name;
       }
-      throw err;
+      return rejectWithValue(err);
     }
   },
 );

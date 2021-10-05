@@ -15,7 +15,7 @@ const ChatWindow = () => {
   const messages = useSelector(getCurrentChannelMessages);
   const currentChannel = useSelector(getCurrentChannel);
 
-  const name = currentChannel && currentChannel.name;
+  const name = currentChannel?.name;
 
   return (
     <div className="row h-100 bg-white flex-md-row">
@@ -41,14 +41,7 @@ const Chat = () => {
   const { fetchingState } = useSelector((state) => state.fetchingState);
 
   useEffect(() => {
-    // eslint-disable-next-line functional/no-let
-    let isActive = true;
-    if (isActive) {
-      dispatch(fetchInfo());
-    }
-    return () => {
-      isActive = false;
-    };
+    dispatch(fetchInfo());
   }, [dispatch]);
 
   return (

@@ -7,11 +7,14 @@ import { openModal } from '../store/modalSlice.js';
 import { modalTypes } from '../constants.js';
 import { setCurrentChannelId } from '../store/channelsInfoSlice.js';
 
+const channelsSelector = (state) => state.channelsInfo.channels;
+const currentChannelIdSelector = (state) => state.channelsInfo.currentChannelId;
+
 const Channels = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const channels = useSelector((state) => state.channelsInfo.channels);
-  const currentChannelId = useSelector((state) => state.channelsInfo.currentChannelId);
+  const channels = useSelector(channelsSelector);
+  const currentChannelId = useSelector(currentChannelIdSelector);
 
   const handleChangeChannel = (id) => () => dispatch(setCurrentChannelId({ id }));
   const handleRemoveChannel = (id) => () => dispatch(openModal({

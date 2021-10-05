@@ -1,6 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 
+const messageSelector = (state) => state.messagesInfo.messages;
+const currentChannelIdSelector = (state) => state.channelsInfo.currentChannelId;
+
 const AlwaysScrollToBottom = () => {
   const elementRef = useRef();
   useEffect(() => elementRef.current.scrollIntoView());
@@ -8,8 +11,8 @@ const AlwaysScrollToBottom = () => {
 };
 
 const Messages = () => {
-  const messages = useSelector((state) => state.messagesInfo.messages);
-  const currentChannelId = useSelector((state) => state.channelsInfo.currentChannelId);
+  const messages = useSelector(messageSelector);
+  const currentChannelId = useSelector(currentChannelIdSelector);
   if (messages.length === 0) return null;
 
   return (

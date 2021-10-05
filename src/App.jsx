@@ -17,18 +17,18 @@ import routes from './routes.js';
 import { getUsername, isAuth } from './utils.js';
 
 const AuthProvider = ({ children }) => {
-  const [isGuest, setisGuest] = useState(isAuth());
+  const [isUser, setisUser] = useState(isAuth());
   const logIn = () => {
-    setisGuest(true);
+    setisUser(true);
   };
   const logOut = () => {
     localStorage.removeItem('user');
-    setisGuest(false);
+    setisUser(false);
   };
 
   return (
     <authContext.Provider value={{
-      isGuest, logIn, logOut, getUsername,
+      isUser, logIn, logOut, getUsername,
     }}
     >
       {children}
@@ -41,7 +41,7 @@ const PrivateRoute = ({ children, path }) => {
   return (
     <Route
       path={path}
-      render={({ location }) => (auth.isGuest
+      render={({ location }) => (auth.isUser
         ? children
         : <Redirect to={{ pathname: routes.loginPagePath(), state: { from: location } }} />)}
     />
