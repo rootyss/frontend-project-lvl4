@@ -1,10 +1,11 @@
 import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
 import '../assets/application.scss';
 import React from 'react';
 import i18next from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
 import App from './App.jsx';
-import store from './store';
+import reducer from './store';
 import apiContext from './context/apiContext.js';
 import { addMessage } from './store/messagesInfoSlice.js';
 import { addChannel, removeChannel, renameChannel } from './store/channelsInfoSlice.js';
@@ -19,6 +20,10 @@ export default async (socket) => {
       resources,
       fallbackLng: 'ru',
     });
+
+  const store = configureStore({
+    reducer,
+  });
 
   const withAcknowledgement = (socketFunc) => (...args) => new Promise((response, reject) => {
     // eslint-disable-next-line functional/no-let
