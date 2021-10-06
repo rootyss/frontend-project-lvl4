@@ -20,8 +20,7 @@ const AuthProvider = ({ children }) => {
 
   const [user, setUser] = useState(userData);
   const logIn = (userIn) => {
-    console.log(userIn);
-    setUser(userIn.username);
+    setUser(userIn);
     localStorage.setItem('user', JSON.stringify(userIn));
   };
   const logOut = () => {

@@ -23,7 +23,6 @@ const FormMessage = () => {
   const messageSchema = yup.object({
     body: yup.string().trim().required(),
   });
-  console.log(username);
   const formik = useFormik({
     initialValues: {
       body: '',

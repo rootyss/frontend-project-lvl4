@@ -8,6 +8,7 @@ import { getCurrentChannel } from '../store/channelsInfoSlice.js';
 import fetchInfo from '../store/createAsyncThunk.js';
 import Messages from './Messages.jsx';
 import FormMessage from './FormMessage.jsx';
+import useAuth from '../hooks/useAuth.jsx';
 
 const ChatWindow = () => {
   const { t } = useTranslation();
@@ -36,12 +37,15 @@ const ChatWindow = () => {
   );
 };
 
+const fetchingStateSelector = (state) => state.fetchingState;
+
 const Chat = () => {
   const dispatch = useDispatch();
-  const { fetchingState } = useSelector((state) => state.fetchingState);
+  const { fetchingState } = useSelector(fetchingStateSelector);
+  const auth = useAuth();
 
   useEffect(() => {
-    dispatch(fetchInfo());
+    dispatch(fetchInfo(auth.user.token));
   }, [dispatch]);
 
   return (
