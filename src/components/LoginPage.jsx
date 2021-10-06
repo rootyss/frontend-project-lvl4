@@ -45,9 +45,8 @@ const LoginPage = () => {
       setAuthFailed(false);
       try {
         const resp = await axios.post(routes.loginPath(), values);
-        localStorage.setItem('user', JSON.stringify(resp.data));
-        auth.logIn();
         const { from } = location.state || { from: { pathname: routes.host() } };
+        auth.logIn(resp.data);
         history.replace(from);
       } catch (err) {
         if (err.isAxiosError && err.response.status === 401) {

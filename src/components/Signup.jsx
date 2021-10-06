@@ -41,8 +41,7 @@ const Signup = () => {
       try {
         const { username, password } = values;
         const { data } = await axios.post(routes.signupPath(), { username, password });
-        localStorage.setItem('user', JSON.stringify(data));
-        auth.logIn();
+        auth.logIn(data);
         history.push(routes.host());
       } catch (err) {
         if (err.response.status === 409) {

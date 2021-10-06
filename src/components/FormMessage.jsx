@@ -10,11 +10,10 @@ import useAuth from '../hooks/useAuth.jsx';
 const channelIdSelector = (state) => state.channelsInfo.currentChannelId;
 
 const FormMessage = () => {
-  const { getUsername } = useAuth();
+  const { user: { username } } = useAuth();
   const textInput = useRef();
   const { api: { sendMessage } } = useAPI();
   const { t } = useTranslation();
-  const username = getUsername();
   const channelId = useSelector(channelIdSelector);
 
   useEffect(() => {
@@ -24,7 +23,7 @@ const FormMessage = () => {
   const messageSchema = yup.object({
     body: yup.string().trim().required(),
   });
-
+  console.log(username);
   const formik = useFormik({
     initialValues: {
       body: '',

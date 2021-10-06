@@ -14,21 +14,24 @@ import useAuth from './hooks/useAuth.jsx';
 import ModalWindow from './components/modals/index.jsx';
 import Signup from './components/Signup.jsx';
 import routes from './routes.js';
-import { getUsername, isAuth } from './utils.js';
 
 const AuthProvider = ({ children }) => {
-  const [isUser, setisUser] = useState(isAuth());
-  const logIn = () => {
-    setisUser(true);
+  const userData = JSON.parse(localStorage.getItem('user'));
+
+  const [user, setUser] = useState(userData);
+  const logIn = (userIn) => {
+    console.log(userIn);
+    setUser(userIn.username);
+    localStorage.setItem('user', JSON.stringify(userIn));
   };
   const logOut = () => {
     localStorage.removeItem('user');
-    setisUser(false);
+    setUser(null);
   };
 
   return (
     <authContext.Provider value={{
-      isUser, logIn, logOut, getUsername,
+      user, logIn, logOut,
     }}
     >
       {children}
@@ -41,7 +44,7 @@ const PrivateRoute = ({ children, path }) => {
   return (
     <Route
       path={path}
-      render={({ location }) => (auth.isUser
+      render={({ location }) => (auth.user
         ? children
         : <Redirect to={{ pathname: routes.loginPagePath(), state: { from: location } }} />)}
     />
